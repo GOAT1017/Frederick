@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Griffin's Rise: Advanced Trading Journal — Pro Edition</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* === RESET & BASE STYLES === */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* === UTILITY CLASSES === */
+    .hidden { display: none !important; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-6 { gap: 1.5rem; }
+    .p-4 { padding: 1rem; }
+    .p-6 { padding: 1.5rem; }
+    .p-8 { padding: 2rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .w-full { width: 100%; }
+    .max-w-4xl { max-width: 56rem; }
+    .max-w-6xl { max-width: 72rem; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .rounded { border-radius: 0.375rem; }
+    .rounded-lg { border-radius: 0.5rem; }
+    .rounded-xl { border-radius: 0.75rem; }
+    .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+    .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+    .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .font-bold { font-weight: 700; }
+    .font-semibold { font-weight: 600; }
+    .font-extrabold { font-weight: 800; }
+    .text-center { text-align: center; }
+    .cursor-pointer { cursor: pointer; }
+    .transition { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter; }
+
+    /* === COLOR CLASSES === */
+    .bg-slate-800 { background-color: #1e293b; }
+    .bg-slate-700 { background-color: #334155; }
+    .bg-blue-600 { background-color: #2563eb; }
+    .bg-blue-700 { background-color: #1d4ed8; }
+    .bg-green-600 { background-color: #16a34a; }
+    .bg-red-600 { background-color: #dc2626; }
+    .bg-yellow-500 { background-color: #eab308; }
+    .bg-purple-600 { background-color: #9333ea; }
+    .text-white { color: #ffffff; }
+    .text-blue-400 { color: #60a5fa; }
+    .text-green-400 { color: #4ade80; }
+    .text-yellow-400 { color: #facc15; }
+    .text-red-400 { color: #f87171; }
+    .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
+    .hover\:bg-green-700:hover { background-color: #15803d; }
+
+    /* === COMPONENT STYLES === */
+    .container {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .container { max-width: 768px; }
+      .md\:flex { display: flex; }
+      .md\:flex-row { flex-direction: row; }
+      .md\:w-1\/2 { width: 50%; }
+      .md\:w-2\/3 { width: 66.666667%; }
+      .md\:w-1\/3 { width: 33.333333%; }
+    }
+
+    @media (min-width: 1024px) {
+      .container { max-width: 1024px; }
+    }
+
+    /* === CUSTOM COMPONENT STYLES === */
+    .tab-btn {
+      background-color: #334155;
+      color: #e2e8f0;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+    }
+
+    .tab-btn:hover {
+      background-color: #475569;
+    }
+
+    .tab-btn.active {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    .card {
+      background-color: #1e293b;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border: 1px solid #334155;
+    }
+
+    .form-input {
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      color: #e2e8f0;
+      width: 100%;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+
+    .btn-success {
+      background-color: #16a34a;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background-color: #15803d;
+    }
+
+    .btn-danger {
+      background-color: #dc2626;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #b91c1c;
+    }
+
+    /* === MODAL STYLES === */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: #1e293b;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border: 1px solid #334155;
+    }
+
+    /* === EDUCATION STYLES === */
+    .education-module {
+      background-color: #0f172a;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #334155;
+      transition: all 0.3s ease;
+    }
+
+    .education-module:hover {
+      transform: translateY(-2px);
+      border-color: #2563eb;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.2);
+    }
+
+    .quiz-question {
+      background-color: #0f172a;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #334155;
+    }
+
+    .quiz-option {
+      background-color: #334155;
+      border: 1px solid #475569;
+      border-radius: 0.375rem;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-option:hover {
+      background-color: #475569;
+    }
+
+    .quiz-option.selected {
+      background-color: #2563eb;
+      border-color: #3b82f6;
+    }
+
+    .quiz-option.correct {
+      background-color: #16a34a;
+      border-color: #22c55e;
+    }
+
+    .quiz-option.incorrect {
+      background-color: #dc2626;
+      border-color: #ef4444;
+    }
+
+    .progress-bar {
+      background-color: #334155;
+      height: 0.5rem;
+      border-radius: 0.25rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background-color: #2563eb;
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 768px) {
+      .container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      
+      .modal-content {
+        width: 95%;
+        padding: 1rem;
+      }
+      
+      .education-module {
+        padding: 1rem;
+      }
+      
+      .text-3xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <!-- === HEADER === -->
+  <header class="bg-slate-800 shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto">
+      <div class="flex flex-col items-center justify-between p-4 md:flex-row">
+        <!-- Logo and Title -->
+        <div class="flex items-center gap-4 mb-4 md:mb-0">
+          <div class="text-3xl font-extrabold text-blue-400">📈</div>
+          <div>
+            <h1 class="text-2xl font-extrabold text-white">Griffin's Rise</h1>
+            <div class="pro-edition-badge">PRO EDITION</div>
+          </div>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex flex-wrap gap-2" role="navigation" aria-label="Main navigation">
+          <button id="onboardingTab" class="tab-btn" aria-controls="onboardingContent">
+            🚀 Onboarding
+          </button>
+          <button id="syllabusTab" class="tab-btn" aria-controls="syllabusContent">
+            📚 Syllabus
+          </button>
+          <button id="trainingTab" class="tab-btn" aria-controls="trainingContent">
+            🎯 Training Manual
+          </button>
+          <button id="journalTab" class="tab-btn" aria-controls="journalContent">
+            📝 Journal
+          </button>
+          <button id="dashboardTab" class="tab-btn" aria-controls="dashboardContent">
+            🏠 Dashboard
+          </button>
+          <button id="educationTab" class="tab-btn bg-purple-600 hover:bg-purple-700" aria-controls="educationContent">
+            🎓 Education
+          </button>
+          <button id="logoutBtn" class="tab-btn bg-red-600 hover:bg-red-700">
+            🚪 Logout
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- === MAIN CONTENT === -->
+  <main class="container mx-auto max-w-6xl p-4">
+    
+    <!-- === EDUCATION TAB CONTENT === -->
+    <section id="educationContent" class="fade-in" role="tabpanel" aria-labelledby="educationTab">
+      <div class="max-w-4xl mx-auto">
+        
+        <!-- Education Header -->
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-white mb-4">🎓 Trading Education Center</h2>
+          <p class="text-lg text-blue-400">Master the markets through comprehensive learning modules and interactive quizzes</p>
+        </div>
+
+        <!-- Education Modules Grid -->
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
+          
+          <!-- Module 1: Market Fundamentals -->
+          <div class="education-module" data-module="fundamentals">
+            <div class="text-center mb-4">
+              <div class="text-4xl mb-3">📊</div>
+              <h3 class="text-xl font-bold text-white">Market Fundamentals</h3>
+              <p class="text-blue-400 text-sm mt-2">Understanding market basics, structure, and key concepts</p>
+            </div>
+            <div class="space-y-3">
+              <div class="text-sm text-green-400">✓ Market Structure</div>
+              <div class="text-sm text-green-400">✓ Order Types</div>
+              <div class="text-sm text-green-400">✓ Market Participants</div>
+              <div class="text-sm text-green-400">✓ Economic Indicators</div>
+            </div>
+            <button class="quiz-btn btn btn-primary w-full mt-4" data-topic="fundamentals">
+              Take Quiz (15 Questions)
+            </button>
+          </div>
+
+          <!-- Module 2: Technical Analysis -->
+          <div class="education-module" data-module="technical">
+            <div class="text-center mb-4">
+              <div class="text-4xl mb-3">📈</div>
+              <h3 class="text-xl font-bold text-white">Technical Analysis</h3>
+              <p class="text-blue-400 text-sm mt-2">Chart patterns, indicators, and price action analysis</p>
+            </div>
+            <div class="space-y-3">
+              <div class="text-sm text-green-400">✓ Chart Patterns</div>
+              <div class="text-sm text-green-400">✓ Technical Indicators</div>
+              <div class="text-sm text-green-400">✓ Support & Resistance</div>
+              <div class="text-sm text-green-400">✓ Trend Analysis</div>
+            </div>
+            <button class="quiz-btn btn btn-primary w-full mt-4" data-topic="technical">
+              Take Quiz (20 Questions)
+            </button>
+          </div>
+
+          <!-- Module 3: Risk Management -->
+          <div class="education-module" data-module="risk">
+            <div class="text-center mb-4">
+              <div class="text-4xl mb-3">🛡️</div>
+              <h3 class="text-xl font-bold text-white">Risk Management</h3>
+              <p class="text-blue-400 text-sm mt-2">Capital preservation and position sizing strategies</p>
+            </div>
+            <div class="space-y-3">
+              <div class="text-sm text-green-400">✓ Position Sizing</div>
+              <div class="text-sm text-green-400">✓ Stop Losses</div>
+              <div class="text-sm text-green-400">✓ Risk-Reward Ratios</div>
+              <div class="text-sm text-green-400">✓ Portfolio Management</div>
+            </div>
+            <button class="quiz-btn btn btn-primary w-full mt-4" data-topic="risk">
+              Take Quiz (18 Questions)
+            </button>
+          </div>
+
+          <!-- Module 4: Trading Psychology -->
+          <div class="education-module" data-module="psychology">
+            <div class="text-center mb-4">
+              <div class="text-4xl mb-3">🧠</div>
+              <h3 class="text-xl font-bold text-white">Trading Psychology</h3>
+              <p class="text-blue-400 text-sm mt-2">Emotional control and behavioral finance principles</p>
+            </div>
+            <div class="space-y-3">
+              <div class="text-sm text-green-400">✓ Emotional Control</div>
+              <div class="text-sm text-green-400">✓ Cognitive Biases</div>
+              <div class="text-sm text-green-400">✓ Discipline & Patience</div>
+              <div class="text-sm text-green-400">✓ Mental Models</div>
+            </div>
+            <button class="quiz-btn btn btn-primary w-full mt-4" data-topic="psychology">
+              Take Quiz (16 Questions)
+            </button>
+          </div>
+
+          <!-- Module 5: Advanced Strategies -->
+          <div class="education-module" data-module="strategies">
+            <div class="text-center mb-4">
+              <div class="text-4xl mb-3">⚡</div>
+              <h3 class="text-xl font-bold text-white">Advanced Strategies</h3>
+              <p class="text-blue-400 text-sm mt-2">Complex trading strategies and portfolio optimization</p>
+            </div>
+            <div class="space-y-3">
+              <div class="text-sm text-green-400">✓ Options Strategies</div>
+              <div class="text-sm text-green-400">✓ Algorithmic Trading</div>
+              <div class="text-sm text-green-400">✓ Portfolio Theory</div>
+              <div class="text-sm text-green-400">✓ Alternative Assets</div>
+            </div>
+            <button class="quiz-btn btn btn-primary w-full mt-4" data-topic="strategies">
+              Take Quiz (22 Questions)
+            </button>
+          </div>
+
+          <!-- Module 6: Market Analysis -->
+          <div class="education-module" data-module="analysis">
+            <div class="text-center mb-4">
+              <div class="text-4xl mb-3">🔍</div>
+              <h3 class="text-xl font-bold text-white">Market Analysis</h3>
+              <p class="text-blue-400 text-sm mt-2">Fundamental analysis and market research techniques</p>
+            </div>
+            <div class="space-y-3">
+              <div class="text-sm text-green-400">✓ Financial Statements</div>
+              <div class="text-sm text-green-400">✓ Valuation Methods</div>
+              <div class="text-sm text-green-400">✓ Sector Analysis</div>
+              <div class="text-sm text-green-400">✓ Economic Research</div>
+            </div>
+            <button class="quiz-btn btn btn-primary w-full mt-4" data-topic="analysis">
+              Take Quiz (19 Questions)
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress Overview -->
+        <div class="card mb-6">
+          <h3 class="text-xl font-bold text-white mb-4">📈 Your Progress</h3>
+          <div class="grid gap-4 md:grid-cols-3">
+            <div class="text-center">
+              <div id="completedModules" class="text-2xl font-bold text-green-400">0</div>
+              <div class="text-sm text-blue-400">Modules Completed</div>
+            </div>
+            <div class="text-center">
+              <div id="totalQuizzes" class="text-2xl font-bold text-blue-400">0</div>
+              <div class="text-sm text-blue-400">Quizzes Taken</div>
+            </div>
+            <div class="text-center">
+              <div id="averageScore" class="text-2xl font-bold text-yellow-400">0%</div>
+              <div class="text-sm text-blue-400">Average Score</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- === EDUCATION QUIZ MODAL === -->
+  <div id="educationModal" class="modal hidden" role="dialog" aria-labelledby="educationModalTitle" aria-modal="true">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <h2 id="educationModalTitle" class="text-2xl font-bold text-white">Trading Education Quiz</h2>
+        <button id="closeEducation" class="btn btn-danger" aria-label="Close quiz">✕</button>
+      </div>
+
+      <!-- Quiz Topic Info -->
+      <div id="topicInfo" class="mb-6 p-4 bg-slate-800 rounded-lg">
+        <h3 id="topicTitle" class="text-lg font-semibold text-white mb-2"></h3>
+        <p id="topicDescription" class="text-blue-400 text-sm"></p>
+      </div>
+
+      <!-- Quiz Progress -->
+      <div class="mb-6">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm text-blue-400">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></span>
+          <span class="text-sm text-blue-400">Score: <span id="currentScore">0</span>/<span id="maxScore">10</span></span>
+        </div>
+        <div class="progress-bar">
+          <div id="quizProgress" class="progress-fill" style="width: 10%"></div>
+        </div>
+      </div>
+
+      <!-- Question Container -->
+      <div id="questionContainer" class="quiz-question">
+        <h3 id="questionText" class="text-lg font-semibold text-white mb-4"></h3>
+        <div id="optionsContainer" class="space-y-2">
+          <!-- Options will be populated here -->
+        </div>
+      </div>
+
+      <!-- Feedback Container -->
+      <div id="feedbackContainer" class="hidden mt-4 p-4 rounded-lg">
+        <p id="feedbackText" class="font-semibold mb-2"></p>
+        <p id="explanationText" class="text-sm"></p>
+      </div>
+
+      <!-- Quiz Controls -->
+      <div class="flex justify-between items-center mt-6">
+        <button id="prevQuestion" class="btn btn-primary" disabled>Previous</button>
+        <button id="submitAnswer" class="btn btn-success" disabled>Submit Answer</button>
+        <button id="nextQuestion" class="btn btn-primary hidden">Next Question</button>
+        <button id="finishQuiz" class="btn btn-success hidden">Finish Quiz</button>
+      </div>
+
+      <!-- Quiz Results -->
+      <div id="quizResults" class="hidden mt-6 text-center">
+        <div id="resultsIcon" class="text-6xl mb-4"></div>
+        <h3 id="resultsTitle" class="text-2xl font-bold mb-2"></h3>
+        <p id="resultsScore" class="text-lg mb-4"></p>
+        <p id="resultsMessage" class="text-blue-400 mb-6"></p>
+        <button id="retakeQuiz" class="btn btn-primary mr-4">Retake Quiz</button>
+        <button id="closeQuizResults" class="btn btn-success">Continue Learning</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- === JAVASCRIPT === -->
+  <script>
+    // =============================================================================
+    // GLOBAL STATE MANAGEMENT
+    // =============================================================================
+    
+    let appState = {
+      currentTab: 'education',
+      education: {
+        currentTopic: null,
+        currentQuestion: 0,
+        selectedAnswers: [],
+        score: 0,
+        moduleProgress: JSON.parse(localStorage.getItem('educationProgress') || '{}'),
+        questions: {
+          fundamentals: [
+            {
+              question: "What is the primary function of a stock exchange?",
+              options: [
+                "To provide investment advice to retail investors",
+                "To facilitate the buying and selling of securities",
+                "To regulate all financial markets",
+                "To set interest rates for loans"
+              ],
+              correct: 1,
+              explanation: "Stock exchanges provide a centralized, regulated marketplace where securities can be bought and sold efficiently, ensuring price discovery and liquidity."
+            },
+            {
+              question: "What does 'market capitalization' represent?",
+              options: [
+                "The total revenue of a company",
+                "The value of a company's outstanding shares",
+                "The company's annual profit",
+                "The amount of cash a company holds"
+              ],
+              correct: 1,
+              explanation: "Market capitalization is calculated by multiplying the current stock price by the total number of outstanding shares, representing the total market value of a company."
+            },
+            {
+              question: "Which order type guarantees execution but not price?",
+              options: [
+                "Limit order",
+                "Stop order",
+                "Market order",
+                "Stop-limit order"
+              ],
+              correct: 2,
+              explanation: "A market order guarantees execution at the next available price but does not guarantee a specific price, especially in volatile markets."
+            },
+            {
+              question: "What is the 'bid-ask spread'?",
+              options: [
+                "The difference between opening and closing prices",
+                "The difference between highest and lowest prices in a day",
+                "The difference between the bid price and ask price",
+                "The difference between current price and yesterday's close"
+              ],
+              correct: 2,
+              explanation: "The bid-ask spread is the difference between the highest price a buyer is willing to pay (bid) and the lowest price a seller is willing to accept (ask)."
+            },
+            {
+              question: "What does GDP measure?",
+              options: [
+                "Government debt levels",
+                "Total value of goods and services produced in a country",
+                "Stock market performance",
+                "Unemployment rate"
+              ],
+              correct: 1,
+              explanation: "Gross Domestic Product (GDP) measures the total monetary value of all finished goods and services produced within a country during a specific time period."
+            },
+            {
+              question: "What is liquidity in financial markets?",
+              options: [
+                "The amount of cash a company has",
+                "How easily an asset can be bought or sold without affecting its price",
+                "The profitability of an investment",
+                "The volatility of a stock price"
+              ],
+              correct: 1,
+              explanation: "Liquidity refers to how quickly and easily an asset can be converted to cash without significantly impacting its market price."
+            },
+            {
+              question: "What role do market makers play?",
+              options: [
+                "They provide investment advice to retail investors",
+                "They provide liquidity by continuously quoting buy and sell prices",
+                "They regulate trading activities",
+                "They set the official closing prices"
+              ],
+              correct: 1,
+              explanation: "Market makers provide liquidity to the market by continuously quoting both bid and ask prices, facilitating smooth trading and reducing spreads."
+            },
+            {
+              question: "What is inflation's typical effect on stock prices?",
+              options: [
+                "Always increases stock prices",
+                "Always decreases stock prices",
+                "Can increase or decrease depending on various factors",
+                "Has no effect on stock prices"
+              ],
+              correct: 2,
+              explanation: "Inflation's effect on stocks is complex - moderate inflation can boost earnings but high inflation can hurt valuations. The impact depends on the company's ability to pass costs to consumers."
+            },
+            {
+              question: "What does 'volume' indicate in trading?",
+              options: [
+                "The price of a stock",
+                "The number of shares traded during a period",
+                "The market capitalization",
+                "The profit margin of a company"
+              ],
+              correct: 1,
+              explanation: "Volume represents the total number of shares traded during a specific period and is a key indicator of market activity and interest in a security."
+            },
+            {
+              question: "What is a bull market?",
+              options: [
+                "A market with high volatility",
+                "A market where prices are generally rising",
+                "A market where prices are generally falling",
+                "A market with low trading volume"
+              ],
+              correct: 1,
+              explanation: "A bull market is characterized by rising stock prices, investor optimism, and overall positive market sentiment, typically lasting for months or years."
+            },
+            {
+              question: "What is the difference between stocks and bonds?",
+              options: [
+                "Stocks represent debt, bonds represent ownership",
+                "Stocks represent ownership, bonds represent debt",
+                "Both represent the same type of investment",
+                "Stocks are safer than bonds"
+              ],
+              correct: 1,
+              explanation: "Stocks represent equity ownership in a company, while bonds represent debt instruments where investors lend money to entities for a defined period."
+            },
+            {
+              question: "What is a dividend?",
+              options: [
+                "A fee paid to brokers",
+                "A distribution of profits to shareholders",
+                "A tax on stock transactions",
+                "A penalty for selling stocks"
+              ],
+              correct: 1,
+              explanation: "A dividend is a payment made by companies to their shareholders, typically representing a portion of the company's profits distributed on a regular basis."
+            },
+            {
+              question: "What does P/E ratio measure?",
+              options: [
+                "Price compared to company's earnings per share",
+                "Profit compared to employee count",
+                "Price compared to economic indicators",
+                "Performance compared to expectations"
+              ],
+              correct: 0,
+              explanation: "The Price-to-Earnings (P/E) ratio compares a company's stock price to its earnings per share, helping investors evaluate if a stock is over or undervalued."
+            },
+            {
+              question: "What is a bear market?",
+              options: [
+                "A market with high trading volume",
+                "A market where prices are generally falling by 20% or more",
+                "A market where prices are generally rising",
+                "A market with low volatility"
+              ],
+              correct: 1,
+              explanation: "A bear market is typically defined as a decline of 20% or more in stock prices from recent highs, characterized by pessimism and declining investor confidence."
+            },
+            {
+              question: "What is the role of the Federal Reserve?",
+              options: [
+                "To provide investment advice",
+                "To regulate monetary policy and banking system",
+                "To manage individual retirement accounts",
+                "To provide stock recommendations"
+              ],
+              correct: 1,
+              explanation: "The Federal Reserve serves as the central bank of the United States, controlling monetary policy, regulating banks, and maintaining financial system stability."
+            }
+          ],
+          technical: [
+            {
+              question: "What is a support level in technical analysis?",
+              options: [
+                "A price level where buying interest is strong enough to prevent further decline",
+                "A price level where selling pressure increases",
+                "The highest price reached in a trading session",
+                "The average price over a specific period"
+              ],
+              correct: 0,
+              explanation: "A support level is a price point where demand is strong enough to prevent the price from declining further, creating a 'floor' for the stock price."
+            },
+            {
+              question: "What does a 'head and shoulders' pattern typically indicate?",
+              options: [
+                "Continuation of the current trend",
+                "A potential trend reversal from bullish to bearish",
+                "High trading volume",
+                "Market volatility"
+              ],
+              correct: 1,
+              explanation: "The head and shoulders pattern is a bearish reversal pattern that typically signals the end of an uptrend and the beginning of a downtrend."
+            },
+            {
+              question: "What is the RSI (Relative Strength Index) used for?",
+              options: [
+                "Measuring trading volume",
+                "Identifying overbought and oversold conditions",
+                "Calculating moving averages",
+                "Determining support and resistance levels"
+              ],
+              correct: 1,
+              explanation: "RSI is a momentum oscillator that measures the speed and magnitude of price changes, helping identify overbought (>70) and oversold (<30) conditions."
+            },
+            {
+              question: "What does a moving average represent?",
+              options: [
+                "The highest price in a period",
+                "The average price over a specific number of periods",
+                "The volume weighted price",
+                "The closing price of the last session"
+              ],
+              correct: 1,
+              explanation: "A moving average smooths out price data by creating a constantly updated average price over a specific number of periods, helping identify trend direction."
+            },
+            {
+              question: "What is a 'golden cross' in technical analysis?",
+              options: [
+                "When the 50-day MA crosses above the 200-day MA",
+                "When the stock price crosses above resistance",
+                "When volume increases significantly",
+                "When RSI reaches 70"
+              ],
+              correct: 0,
+              explanation: "A golden cross occurs when a shorter-term moving average (like 50-day) crosses above a longer-term moving average (like 200-day), often signaling a bullish trend."
+            },
+            {
+              question: "What is resistance in technical analysis?",
+              options: [
+                "A price level where selling pressure prevents further price increases",
+                "A price level where buying pressure increases",
+                "The lowest price in a trading range",
+                "The average trading volume"
+              ],
+              correct: 0,
+              explanation: "Resistance is a price level where selling pressure is strong enough to prevent the price from rising further, creating a 'ceiling' for the stock price."
+            },
+            {
+              question: "What does MACD stand for?",
+              options: [
+                "Moving Average Convergence Divergence",
+                "Market Analysis and Chart Data",
+                "Maximum Average Closing Distance",
+                "Monthly Adjusted Closing Data"
+              ],
+              correct: 0,
+              explanation: "MACD (Moving Average Convergence Divergence) is a trend-following momentum indicator that shows the relationship between two moving averages."
+            },
+            {
+              question: "What is a 'double top' pattern?",
+              options: [
+                "A bullish continuation pattern",
+                "A bearish reversal pattern with two peaks at similar levels",
+                "A volume indicator",
+                "A support level pattern"
+              ],
+              correct: 1,
+              explanation: "A double top is a bearish reversal pattern that occurs when price reaches a high, declines, rallies back to a similar high, then declines again."
+            },
+            {
+              question: "What does high trading volume typically confirm?",
+              options: [
+                "The strength of a price movement",
+                "Market manipulation",
+                "Low interest in the stock",
+                "Price stagnation"
+              ],
+              correct: 0,
+              explanation: "High volume typically confirms the strength and validity of a price movement, while low volume may suggest weak conviction behind the move."
+            },
+            {
+              question: "What is a 'breakout' in technical analysis?",
+              options: [
+                "When price moves below support with high volume",
+                "When price moves outside a defined support or resistance level",
+                "When RSI exceeds 80",
+                "When moving averages converge"
+              ],
+              correct: 1,
+              explanation: "A breakout occurs when price moves decisively above resistance or below support, often signaling the start of a new trend direction."
+            },
+            {
+              question: "What is the purpose of Bollinger Bands?",
+              options: [
+                "To measure trading volume",
+                "To identify volatility and potential reversal points",
+                "To calculate moving averages",
+                "To determine dividend yields"
+              ],
+              correct: 1,
+              explanation: "Bollinger Bands consist of a moving average with upper and lower bands that expand and contract based on volatility, helping identify overbought/oversold conditions."
+            },
+            {
+              question: "What is a 'flag' pattern?",
+              options: [
+                "A reversal pattern",
+                "A continuation pattern that looks like a small rectangle",
+                "A volume indicator",
+                "A support level"
+              ],
+              correct: 1,
+              explanation: "A flag pattern is a continuation pattern that appears as a small rectangular consolidation after a strong price move, typically followed by continuation in the same direction."
+            },
+            {
+              question: "What does a 'death cross' indicate?",
+              options: [
+                "A bullish signal when short-term MA crosses above long-term MA",
+                "A bearish signal when short-term MA crosses below long-term MA",
+                "High trading volume",
+                "Market volatility"
+              ],
+              correct: 1,
+              explanation: "A death cross occurs when a shorter-term moving average crosses below a longer-term moving average, often signaling a potential bearish trend."
+            },
+            {
+              question: "What is 'divergence' in technical analysis?",
+              options: [
+                "When price and an indicator move in opposite directions",
+                "When two moving averages cross",
+                "When volume increases",
+                "When support becomes resistance"
+              ],
+              correct: 0,
+              explanation: "Divergence occurs when the price of an asset and a technical indicator move in opposite directions, often signaling a potential trend reversal."
+            },
+            {
+              question: "What is the Stochastic Oscillator used for?",
+              options: [
+                "Measuring trend direction",
+                "Comparing closing price to the price range over a period",
+                "Calculating moving averages",
+                "Determining trading volume"
+              ],
+              correct: 1,
+              explanation: "The Stochastic Oscillator compares a security's closing price to its price range over a specific period, helping identify overbought and oversold conditions."
+            },
+            {
+              question: "What is a 'cup and handle' pattern?",
+              options: [
+                "A bearish reversal pattern",
+                "A bullish continuation pattern resembling a tea cup",
+                "A volume pattern",
+                "A support level formation"
+              ],
+              correct: 1,
+              explanation: "The cup and handle is a bullish continuation pattern that resembles a tea cup on a chart, indicating potential upward price movement after consolidation."
+            },
+            {
+              question: "What does 'price action' refer to?",
+              options: [
+                "The movement of a security's price plotted over time",
+                "The volume of trades",
+                "The bid-ask spread",
+                "The market capitalization changes"
+              ],
+              correct: 0,
+              explanation: "Price action refers to the movement of a security's price over time, which forms the basis for all chart patterns and technical analysis."
+            },
+            {
+              question: "What is a 'triangle' pattern in technical analysis?",
+              options: [
+                "A reversal pattern only",
+                "A continuation pattern only",
+                "A consolidation pattern that can be either continuation or reversal",
+                "A volume indicator"
+              ],
+              correct: 2,
+              explanation: "Triangle patterns are consolidation formations where price moves within converging trend lines. They can signal either continuation or reversal depending on the breakout direction."
+            },
+            {
+              question: "What is the significance of the 200-day moving average?",
+              options: [
+                "It's used only for day trading",
+                "It's a key long-term trend indicator",
+                "It measures trading volume",
+                "It calculates dividend payments"
+              ],
+              correct: 1,
+              explanation: "The 200-day moving average is widely considered a key indicator of long-term trend direction, with prices above it suggesting bullish conditions and below suggesting bearish conditions."
+            },
+            {
+              question: "What is 'momentum' in technical analysis?",
+              options: [
+                "The rate of change in a security's price",
+                "The trading volume",
+                "The bid-ask spread",
+                "The market capitalization"
+              ],
+              correct: 0,
+              explanation: "Momentum measures the rate of change in a security's price, helping traders identify the strength of a trend and potential reversal points."
+            }
+          ],
+          risk: [
+            {
+              question: "What is the '1% rule' in trading?",
+              options: [
+                "Never risk more than 1% of your account on a single trade",
+                "Always make 1% profit per trade",
+                "Trade only 1% of available stocks",
+                "Spend only 1% of time analyzing"
+              ],
+              correct: 0,
+              explanation: "The 1% rule suggests never risking more than 1% of your total account balance on any single trade, helping preserve capital over the long term."
+            },
+            {
+              question: "What is position sizing?",
+              options: [
+                "The physical size of your trading desk",
+                "Determining how much capital to allocate to each trade",
+                "The number of stocks in your portfolio",
+                "The size of your computer screen"
+              ],
+              correct: 1,
+              explanation: "Position sizing is the process of determining how much capital to risk on each trade, based on your risk tolerance and the specific risk of each trade."
+            },
+            {
+              question: "What is a stop-loss order?",
+              options: [
+                "An order to buy more shares when price rises",
+                "An order to automatically close a position at a predetermined loss level",
+                "An order to take profits",
+                "An order to cancel other orders"
+              ],
+              correct: 1,
+              explanation: "A stop-loss order automatically closes your position when the price moves against you by a predetermined amount, limiting your potential losses."
+            },
+            {
+              question: "What is the risk-reward ratio?",
+              options: [
+                "How much you can potentially lose vs. how much you can potentially gain",
+                "The number of winning vs. losing trades",
+                "Your account size vs. market size",
+                "Time spent trading vs. time spent analyzing"
+              ],
+              correct: 0,
+              explanation: "The risk-reward ratio compares the potential loss (risk) to potential profit (reward) of a trade. A 1:3 ratio means risking $1 to potentially gain $3."
+            },
+            {
+              question: "What is diversification?",
+              options: [
+                "Putting all money in one stock",
+                "Spreading risk across different assets, sectors, or strategies",
+                "Only trading large-cap stocks",
+                "Trading only during market hours"
+              ],
+              correct: 1,
+              explanation: "Diversification involves spreading investments across different assets, sectors, or strategies to reduce overall portfolio risk and avoid concentration risk."
+            },
+            {
+              question: "What should you do after a series of losing trades?",
+              options: [
+                "Increase position size to recover losses quickly",
+                "Reduce position size and review your strategy",
+                "Switch to a completely different strategy immediately",
+                "Trade more frequently to make up losses"
+              ],
+              correct: 1,
+              explanation: "After losing streaks, it's wise to reduce position size, review your strategy, analyze what went wrong, and ensure you're still following your trading plan."
+            },
+            {
+              question: "What is correlation in portfolio management?",
+              options: [
+                "How assets move in relation to each other",
+                "The speed of price movements",
+                "The volume of trading",
+                "The size of price movements"
+              ],
+              correct: 0,
+              explanation: "Correlation measures how different assets move in relation to each other. Low correlation between assets can help reduce portfolio risk through diversification."
+            },
+            {
+              question: "What is the maximum drawdown?",
+              options: [
+                "The largest single loss on a trade",
+                "The largest peak-to-trough decline in account value",
+                "The maximum amount you can invest",
+                "The highest profit achieved"
+              ],
+              correct: 1,
+              explanation: "Maximum drawdown measures the largest peak-to-trough decline in your account value, helping assess the worst-case scenario risk of your trading strategy."
+            },
+            {
+              question: "What is leverage in trading?",
+              options: [
+                "Using borrowed money to increase position size",
+                "The number of trades per day",
+                "The speed of order execution",
+                "The variety of assets traded"
+              ],
+              correct: 0,
+              explanation: "Leverage allows traders to control larger positions than their account balance would normally allow by using borrowed money, which amplifies both gains and losses."
+            },
+            {
+              question: "What is a trailing stop?",
+              options: [
+                "A stop-loss that moves with the price to lock in profits",
+                "A stop-loss that never moves",
+                "A type of market order",
+                "A way to calculate position size"
+              ],
+              correct: 0,
+              explanation: "A trailing stop is a dynamic stop-loss that moves with the price in your favor, helping lock in profits while still providing downside protection."
+            },
+            {
+              question: "What is the Kelly Criterion?",
+              options: [
+                "A chart pattern",
+                "A mathematical formula for optimal position sizing",
+                "A type of stop-loss",
+                "A market timing indicator"
+              ],
+              correct: 1,
+              explanation: "The Kelly Criterion is a mathematical formula that helps determine the optimal position size based on the probability of winning and the win/loss ratio."
+            },
+            {
+              question: "What is Value at Risk (VaR)?",
+              options: [
+                "The intrinsic value of a stock",
+                "A statistical measure of potential losses over a specific time period",
+                "The value of all your positions",
+                "The risk-free rate of return"
+              ],
+              correct: 1,
+              explanation: "Value at Risk (VaR) is a statistical measure that quantifies the level of financial risk within a firm or portfolio over a specific time frame."
+            },
+            {
+              question: "What is portfolio rebalancing?",
+              options: [
+                "Buying and selling to maintain desired asset allocation",
+                "Closing all positions",
+                "Only buying new positions",
+                "Calculating total returns"
+              ],
+              correct: 0,
+              explanation: "Portfolio rebalancing involves buying and selling assets to maintain your desired asset allocation percentages as market movements cause allocations to drift."
+            },
+            {
+              question: "What is concentration risk?",
+              options: [
+                "The risk of having too much capital in similar investments",
+                "The risk of not having enough capital",
+                "The risk of trading too frequently",
+                "The risk of market volatility"
+              ],
+              correct: 0,
+              explanation: "Concentration risk arises when a portfolio has too much exposure to similar investments, sectors, or asset classes, increasing vulnerability to specific risks."
+            },
+            {
+              question: "What is the Sharpe ratio?",
+              options: [
+                "A measure of risk-adjusted returns",
+                "A chart pattern indicator",
+                "A type of moving average",
+                "A volume indicator"
+              ],
+              correct: 0,
+              explanation: "The Sharpe ratio measures risk-adjusted returns by comparing the excess return of an investment to its standard deviation, helping evaluate performance per unit of risk."
+            },
+            {
+              question: "What is emotional risk in trading?",
+              options: [
+                "Market volatility",
+                "The risk of making decisions based on emotions rather than analysis",
+                "Economic uncertainty",
+                "Political events"
+              ],
+              correct: 1,
+              explanation: "Emotional risk refers to the danger of making trading decisions based on emotions like fear and greed rather than objective analysis and predefined rules."
+            },
+            {
+              question: "What is hedging?",
+              options: [
+                "Taking offsetting positions to reduce risk",
+                "Increasing position sizes",
+                "Only buying stocks",
+                "Trading without stop-losses"
+              ],
+              correct: 0,
+              explanation: "Hedging involves taking offsetting positions in related securities to reduce or eliminate the risk of adverse price movements in your main positions."
+            },
+            {
+              question: "What is liquidity risk?",
+              options: [
+                "The risk of not being able to buy or sell an asset quickly without affecting its price",
+                "The risk of losing money",
+                "The risk of high volatility",
+                "The risk of margin calls"
+              ],
+              correct: 0,
+              explanation: "Liquidity risk is the risk that you won't be able to buy or sell an investment quickly without significantly impacting its price, especially in low-volume securities."
+            }
+          ],
+          psychology: [
+            {
+              question: "What is the most dangerous emotion in trading?",
+              options: [
+                "Excitement",
+                "Fear and greed equally",
+                "Boredom",
+                "Curiosity"
+              ],
+              correct: 1,
+              explanation: "Both fear and greed are equally dangerous - fear can prevent profitable trades while greed can lead to excessive risk-taking and holding losing positions too long."
+            },
+            {
+              question: "What is confirmation bias in trading?",
+              options: [
+                "Confirming trades with brokers",
+                "Seeking information that supports existing beliefs while ignoring contrary evidence",
+                "Getting confirmation from other traders",
+                "Confirming technical patterns"
+              ],
+              correct: 1,
+              explanation: "Confirmation bias leads traders to seek information that confirms their existing beliefs while ignoring or dismissing information that contradicts their position."
+            },
+            {
+              question: "What is the disposition effect?",
+              options: [
+                "Being disposed to trade frequently",
+                "The tendency to sell winning positions too early and hold losing positions too long",
+                "The tendency to follow market trends",
+                "Being disposed to certain trading strategies"
+              ],
+              correct: 1,
+              explanation: "The disposition effect is the tendency to realize gains too early (selling winners) while holding onto losses too long, often leading to poor overall performance."
+            },
+            {
+              question: "What is FOMO in trading?",
+              options: [
+                "Fear of Missing Out on profitable opportunities",
+                "Fear of Market Orders",
+                "Fear of Margin Operations",
+                "Fear of Making Offers"
+              ],
+              correct: 0,
+              explanation: "FOMO (Fear of Missing Out) can lead traders to chase price movements, enter trades at poor prices, or abandon their trading plan to participate in trending moves."
+            },
+            {
+              question: "What is analysis paralysis?",
+              options: [
+                "Unable to analyze charts",
+                "Over-analyzing to the point of being unable to make decisions",
+                "Analyzing only fundamental data",
+                "Using too many indicators"
+              ],
+              correct: 1,
+              explanation: "Analysis paralysis occurs when traders become so focused on analyzing every detail that they become unable to make timely trading decisions."
+            },
+            {
+              question: "What is revenge trading?",
+              options: [
+                "Trading against market trends",
+                "Making impulsive trades to recover losses from previous trades",
+                "Trading in bear markets",
+                "Short selling stocks"
+              ],
+              correct: 1,
+              explanation: "Revenge trading involves making impulsive, often larger trades to quickly recover losses from previous trades, typically leading to even greater losses."
+            },
+            {
+              question: "What is overconfidence bias?",
+              options: [
+                "Being confident in your broker",
+                "Overestimating your ability to predict market movements",
+                "Having confidence in market trends",
+                "Being confident in your equipment"
+              ],
+              correct: 1,
+              explanation: "Overconfidence bias leads traders to overestimate their abilities, take excessive risks, and make predictions with unwarranted certainty."
+            },
+            {
+              question: "What is anchoring bias?",
+              options: [
+                "Focusing too heavily on the first piece of information encountered",
+                "Sticking to one trading strategy",
+                "Trading only large-cap stocks",
+                "Using only one broker"
+              ],
+              correct: 0,
+              explanation: "Anchoring bias occurs when traders give disproportionate weight to the first information they receive, such as the price they first saw a stock at."
+            },
+            {
+              question: "How should you handle a losing streak?",
+              options: [
+                "Increase position sizes to recover faster",
+                "Take a break, review your strategy, and consider reducing position size",
+                "Switch strategies immediately",
+                "Ignore it and keep trading"
+              ],
+              correct: 1,
+              explanation: "During losing streaks, it's important to pause, review what went wrong, potentially reduce position sizes, and ensure you're still following your tested trading plan."
+            },
+            {
+              question: "What is loss aversion?",
+              options: [
+                "Avoiding all risky trades",
+                "The tendency to feel losses more intensely than equivalent gains",
+                "Setting stop-losses on all trades",
+                "Diversifying your portfolio"
+              ],
+              correct: 1,
+              explanation: "Loss aversion is the psychological principle that people feel the pain of losing money about twice as strongly as the pleasure of gaining the same amount."
+            },
+            {
+              question: "What is the best way to maintain discipline in trading?",
+              options: [
+                "Follow your emotions",
+                "Have a written trading plan and stick to it",
+                "Copy other successful traders",
+                "Trade more frequently"
+              ],
+              correct: 1,
+              explanation: "Maintaining discipline requires having a well-defined trading plan written in advance and strictly adhering to it, removing emotion from decision-making."
+            },
+            {
+              question: "What is mental accounting in trading?",
+              options: [
+                "Keeping track of all trades mentally",
+                "Treating money differently based on its source or intended use",
+                "Using mental math for calculations",
+                "Remembering past trades"
+              ],
+              correct: 1,
+              explanation: "Mental accounting leads traders to treat money differently based on its source (like 'house money' from profits) or purpose, often leading to poor risk management."
+            },
+            {
+              question: "What is the sunk cost fallacy in trading?",
+              options: [
+                "Continuing to hold losing positions because of money already invested",
+                "Only investing money you can afford to lose",
+                "Calculating total costs of trading",
+                "Avoiding high-cost trades"
+              ],
+              correct: 0,
+              explanation: "The sunk cost fallacy causes traders to continue holding losing positions because they've already invested money, rather than making decisions based on future prospects."
+            },
+            {
+              question: "What role does patience play in successful trading?",
+              options: [
+                "It's not important in fast markets",
+                "Essential for waiting for high-probability setups and letting winners run",
+                "Only important for long-term investing",
+                "Only needed when markets are closed"
+              ],
+              correct: 1,
+              explanation: "Patience is crucial for waiting for high-probability trade setups, allowing winning trades to develop fully, and avoiding impulsive decisions."
+            },
+            {
+              question: "What is recency bias?",
+              options: [
+                "Giving more weight to recent events when making decisions",
+                "Only looking at old data",
+                "Trading only recent IPOs",
+                "Focusing on recent news only"
+              ],
+              correct: 0,
+              explanation: "Recency bias causes traders to give disproportionate weight to recent events or outcomes, potentially leading to poor decision-making based on limited recent data."
+            },
+            {
+              question: "How can meditation or mindfulness help trading?",
+              options: [
+                "It predicts market movements",
+                "It helps maintain emotional control and clear thinking",
+                "It increases trading speed",
+                "It eliminates all losses"
+              ],
+              correct: 1,
+              explanation: "Meditation and mindfulness practices can help traders maintain emotional equilibrium, improve focus, and make more rational decisions under pressure."
+            }
+          ],
+          strategies: [
+            {
+              question: "What is dollar-cost averaging?",
+              options: [
+                "Buying the same dollar amount of an investment at regular intervals",
+                "Averaging the cost of all trades",
+                "Converting foreign currency",
+                "Calculating average daily returns"
+              ],
+              correct: 0,
+              explanation: "Dollar-cost averaging involves investing a fixed dollar amount in a particular investment at regular intervals, regardless of the share price, which can reduce the impact of volatility."
+            },
+            {
+              question: "What is a covered call strategy?",
+              options: [
+                "Buying calls and stocks simultaneously",
+                "Selling call options on stocks you own",
+                "Buying protective puts",
+                "Selling naked calls"
+              ],
+              correct: 1,
+              explanation: "A covered call involves selling call options on stocks you already own, generating income from the premium while potentially capping upside gains."
+            },
+            {
+              question: "What is momentum trading?",
+              options: [
+                "Trading based on fundamental analysis",
+                "Trading in the direction of strong price movements",
+                "Trading against the trend",
+                "Long-term buy and hold"
+              ],
+              correct: 1,
+              explanation: "Momentum trading involves buying securities that are rising and selling those that are falling, based on the assumption that trends will continue in the near term."
+            },
+            {
+              question: "What is mean reversion trading?",
+              options: [
+                "Trading based on the assumption that prices will return to their average",
+                "Trading only average-priced stocks",
+                "Calculating mean returns",
+                "Reverting to old trading strategies"
+              ],
+              correct: 0,
+              explanation: "Mean reversion trading is based on the statistical assumption that prices will eventually return to their historical average or mean over time."
+            },
+            {
+              question: "What is pairs trading?",
+              options: [
+                "Trading two different asset classes",
+                "Going long one stock and short a correlated stock",
+                "Trading in pairs of identical amounts",
+                "Trading only during market pairs"
+              ],
+              correct: 1,
+              explanation: "Pairs trading involves going long one stock while simultaneously shorting a highly correlated stock, profiting from the relative performance difference."
+            },
+            {
+              question: "What is algorithmic trading?",
+              options: [
+                "Using computer programs to execute trades based on predefined criteria",
+                "Trading using only technical indicators",
+                "Mathematical analysis of stocks",
+                "Trading during specific algorithms"
+              ],
+              correct: 0,
+              explanation: "Algorithmic trading uses computer programs to automatically execute trades based on predefined criteria, often at high speeds and frequencies."
+            },
+            {
+              question: "What is a straddle option strategy?",
+              options: [
+                "Buying both a call and put option with the same strike and expiration",
+                "Selling calls and buying puts",
+                "Trading multiple stocks simultaneously",
+                "Holding positions across different time frames"
+              ],
+              correct: 0,
+              explanation: "A straddle involves buying both a call and put option with the same strike price and expiration date, profiting from significant price movement in either direction."
+            },
+            {
+              question: "What is arbitrage?",
+              options: [
+                "High-risk speculation",
+                "Exploiting price differences of the same asset in different markets",
+                "Long-term investing",
+                "Currency exchange"
+              ],
+              correct: 1,
+              explanation: "Arbitrage involves simultaneously buying and selling identical or equivalent assets in different markets to profit from price discrepancies with minimal risk."
+            },
+            {
+              question: "What is swing trading?",
+              options: [
+                "Day trading with quick entries and exits",
+                "Holding positions for several days to weeks to capture price swings",
+                "Trading only during market swings",
+                "Long-term buy and hold investing"
+              ],
+              correct: 1,
+              explanation: "Swing trading involves holding positions for several days to weeks, attempting to capture price movements or 'swings' in trending stocks."
+            },
+            {
+              question: "What is scalping?",
+              options: [
+                "Long-term position holding",
+                "Making many small profits from small price changes throughout the day",
+                "Buying at resistance levels",
+                "Fundamental analysis approach"
+              ],
+              correct: 1,
+              explanation: "Scalping is a day trading strategy that involves making numerous trades throughout the day to profit from small price movements, typically holding positions for minutes."
+            },
+            {
+              question: "What is the iron condor strategy?",
+              options: [
+                "A neutral options strategy using four different options",
+                "A stock selection method",
+                "A technical analysis pattern",
+                "A risk management technique"
+              ],
+              correct: 0,
+              explanation: "An iron condor is a neutral options strategy that involves selling a call spread and a put spread, profiting when the underlying stays within a specific range."
+            },
+            {
+              question: "What is portfolio optimization?",
+              options: [
+                "Buying only the best performing stocks",
+                "Mathematically determining the best combination of assets for risk/return",
+                "Optimizing trading software",
+                "Choosing the cheapest stocks"
+              ],
+              correct: 1,
+              explanation: "Portfolio optimization uses mathematical models to determine the ideal combination of assets that maximizes return for a given level of risk or minimizes risk for a given return."
+            },
+            {
+              question: "What is high-frequency trading (HFT)?",
+              options: [
+                "Trading many times per day manually",
+                "Using algorithms to execute a large number of orders at extremely high speeds",
+                "Trading only high-priced stocks",
+                "Frequent portfolio rebalancing"
+              ],
+              correct: 1,
+              explanation: "High-frequency trading uses powerful computers and algorithms to execute a large number of orders at extremely high speeds, often in milliseconds."
+            },
+            {
+              question: "What is a butterfly spread?",
+              options: [
+                "A three-legged options strategy with limited risk and reward",
+                "A stock chart pattern",
+                "A diversification technique",
+                "A type of stop-loss order"
+              ],
+              correct: 0,
+              explanation: "A butterfly spread is an options strategy that combines bull and bear spreads, offering limited profit potential and limited risk, typically used in low volatility environments."
+            },
+            {
+              question: "What is factor investing?",
+              options: [
+                "Investing based on specific characteristics or 'factors' that drive returns",
+                "Investing in manufacturing companies",
+                "Mathematical factor analysis",
+                "Investing in mutual funds only"
+              ],
+              correct: 0,
+              explanation: "Factor investing targets specific characteristics or 'factors' such as value, momentum, size, or quality that have historically driven returns across asset classes."
+            },
+            {
+              question: "What is a protective put?",
+              options: [
+                "Buying put options to protect against downside in stocks you own",
+                "Selling puts for income",
+                "A type of stop-loss order",
+                "Protective clothing for traders"
+              ],
+              correct: 0,
+              explanation: "A protective put involves buying put options on stocks you own, providing downside protection similar to insurance against significant losses."
+            },
+            {
+              question: "What is statistical arbitrage?",
+              options: [
+                "Using statistical models to identify and exploit price inefficiencies",
+                "Calculating trading statistics",
+                "Government statistical data trading",
+                "Academic statistical research"
+              ],
+              correct: 0,
+              explanation: "Statistical arbitrage uses quantitative models and statistical methods to identify pricing inefficiencies between related securities and profit from their convergence."
+            },
+            {
+              question: "What is grid trading?",
+              options: [
+                "Trading on a power grid",
+                "Placing buy and sell orders at regular intervals above and below current price",
+                "Trading only utility stocks",
+                "Using grid-based charts"
+              ],
+              correct: 1,
+              explanation: "Grid trading involves placing buy and sell orders at predetermined intervals above and below the current market price, creating a 'grid' of orders."
+            },
+            {
+              question: "What is news-based trading?",
+              options: [
+                "Reading financial newspapers",
+                "Making trades based on news events and market reactions",
+                "Trading media company stocks",
+                "Watching financial news channels"
+              ],
+              correct: 1,
+              explanation: "News-based trading involves making investment decisions based on news events, earnings announcements, economic data, and other market-moving information."
+            },
+            {
+              question: "What is rebalancing frequency optimization?",
+              options: [
+                "Determining the optimal frequency to adjust portfolio allocations",
+                "Optimizing trading frequency",
+                "Balancing multiple accounts",
+                "Frequency analysis of market data"
+              ],
+              correct: 0,
+              explanation: "Rebalancing frequency optimization involves determining how often to adjust portfolio allocations to maintain target weightings while minimizing transaction costs and tax implications."
+            },
+            {
+              question: "What is alternative beta?",
+              options: [
+                "Beta calculation for alternative investments",
+                "Using alternative assets to replicate traditional market exposure",
+                "Alternative to beta measurements",
+                "Beta testing of trading software"
+              ],
+              correct: 1,
+              explanation: "Alternative beta strategies use alternative investments like commodities, REITs, or other assets to replicate traditional market exposure with potentially different risk characteristics."
+            },
+            {
+              question: "What is dynamic hedging?",
+              options: [
+                "Adjusting hedge positions based on changing market conditions",
+                "Hedging with dynamic assets",
+                "Static hedge positions",
+                "Hedging only during volatility"
+              ],
+              correct: 0,
+              explanation: "Dynamic hedging involves continuously adjusting hedge positions based on changing market conditions, portfolio values, and risk exposures to maintain desired risk levels."
+            }
+          ],
+          analysis: [
+            {
+              question: "What is fundamental analysis?",
+              options: [
+                "Analysis of basic market trends",
+                "Evaluating a company's financial health and intrinsic value",
+                "Analysis of chart patterns",
+                "Basic mathematical calculations"
+              ],
+              correct: 1,
+              explanation: "Fundamental analysis involves evaluating a company's financial statements, management, competitive advantages, and market conditions to determine its intrinsic value."
+            },
+            {
+              question: "What does ROE (Return on Equity) measure?",
+              options: [
+                "How efficiently a company uses shareholder equity to generate profit",
+                "The return on employee investments", 
+                "Return on economic indicators",
+                "Rate of economic growth"
+              ],
+              correct: 0,
+              explanation: "ROE measures how efficiently a company uses shareholders' equity to generate profits, calculated as net income divided by shareholders' equity."
+            },
+            {
+              question: "What is the current ratio?",
+              options: [
+                "Current assets divided by current liabilities",
+                "Current stock price divided by book value",
+                "Current year earnings vs. previous year",
+                "Current market cap vs. revenue"
+              ],
+              correct: 0,
+              explanation: "The current ratio measures a company's ability to pay short-term obligations, calculated by dividing current assets by current liabilities."
+            },
+            {
+              question: "What is free cash flow?",
+              options: [
+                "Cash available to investors after operating expenses and capital expenditures",
+                "Cash given away for free",
+                "Operating cash flow only",
+                "Total cash on balance sheet"
+              ],
+              correct: 0,
+              explanation: "Free cash flow represents the cash generated by operations minus capital expenditures, showing money available for dividends, debt repayment, or expansion."
+            },
+            {
+              question: "What is the debt-to-equity ratio?",
+              options: [
+                "Total debt divided by total equity",
+                "Total assets divided by total debt",
+                "Current debt divided by current equity",
+                "Long-term debt divided by short-term debt"
+              ],
+              correct: 0,
+              explanation: "The debt-to-equity ratio measures financial leverage by comparing total debt to total shareholders' equity, indicating how much debt is used to finance assets."
+            },
+            {
+              question: "What is EBITDA?",
+              options: [
+                "Earnings Before Interest, Taxes, Depreciation, and Amortization",
+                "Earnings Before Investment and Tax Deductions Available",
+                "Economic Business Intelligence and Data Analysis",
+                "European Banking Investment and Trading Data Authority"
+              ],
+              correct: 0,
+              explanation: "EBITDA measures a company's operating performance by excluding non-operating expenses and non-cash charges, providing a clearer view of operational profitability."
+            },
+            {
+              question: "What is sector rotation?",
+              options: [
+                "Moving investments between different industry sectors based on economic cycles",
+                "Rotating employees between sectors",
+                "Geographic rotation of investments",
+                "Rotating trading strategies"
+              ],
+              correct: 0,
+              explanation: "Sector rotation involves shifting investments between different industry sectors based on economic cycles and which sectors are expected to outperform."
+            },
+            {
+              question: "What is a moat in business analysis?",
+              options: [
+                "A company's sustainable competitive advantage",
+                "The company's headquarters location",
+                "A type of defensive investment",
+                "Water around a castle"
+              ],
+              correct: 0,
+              explanation: "An economic moat refers to a company's sustainable competitive advantages that protect it from competitors, such as brand strength, patents, or network effects."
+            },
+            {
+              question: "What is the PEG ratio?",
+              options: [
+                "P/E ratio divided by earnings growth rate",
+                "Price to Economic Growth ratio",
+                "Profit to Equity Growth ratio",
+                "Price to Earnings Guidance ratio"
+              ],
+              correct: 0,
+              explanation: "The PEG ratio compares a stock's P/E ratio to its earnings growth rate, helping investors determine if a stock is fairly valued relative to its growth prospects."
+            },
+            {
+              question: "What is working capital?",
+              options: [
+                "Current assets minus current liabilities",
+                "Total capital available for work",
+                "Capital used by working employees",
+                "Cash available for daily operations"
+              ],
+              correct: 0,
+              explanation: "Working capital represents the difference between current assets and current liabilities, indicating a company's short-term financial health and operational efficiency."
+            },
+            {
+              question: "What is enterprise value?",
+              options: [
+                "Market cap plus debt minus cash",
+                "Total value of enterprise software",
+                "Value of large enterprises only",
+                "Book value of the company"
+              ],
+              correct: 0,
+              explanation: "Enterprise value represents the total value of a company, calculated as market capitalization plus total debt minus cash and cash equivalents."
+            },
+            {
+              question: "What is gross margin?",
+              options: [
+                "Gross profit divided by revenue",
+                "Total margin on all products",
+                "Margin before expenses",
+                "Revenue minus cost of sales"
+              ],
+              correct: 0,
+              explanation: "Gross margin is calculated as gross profit divided by revenue, showing what percentage of revenue remains after direct production costs."
+            },
+            {
+              question: "What is book value per share?",
+              options: [
+                "Total shareholders' equity divided by outstanding shares",
+                "Book price divided by number of shares",
+                "Value listed in accounting books",
+                "Share price according to books"
+              ],
+              correct: 0,
+              explanation: "Book value per share represents the accounting value of each share, calculated by dividing total shareholders' equity by the number of outstanding shares."
+            },
+            {
+              question: "What is operating margin?",
+              options: [
+                "Operating income divided by revenue",  
+                "Gross margin minus operating expenses",
+                "Margin from operations only",
+                "Revenue minus all operating costs"
+              ],
+              correct: 0,
+              explanation: "Operating margin measures operational efficiency by comparing operating income to revenue, showing what percentage of revenue remains after operating expenses."
+            },
+            {
+              question: "What is inventory turnover?",
+              options: [
+                "Cost of goods sold divided by average inventory",
+                "How often inventory is physically turned",
+                "Revenue divided by inventory",
+                "Inventory divided by sales"
+              ],
+              correct: 0,
+              explanation: "Inventory turnover measures how efficiently a company manages inventory by comparing cost of goods sold to average inventory levels."
+            },
+            {
+              question: "What is the price-to-book ratio?",
+              options: [
+                "Market price per share divided by book value per share",
+                "Total price divided by book price",
+                "Price compared to published book values",
+                "Market cap divided by book value"
+              ],
+              correct: 0,
+              explanation: "The price-to-book ratio compares a stock's market price to its book value per share, helping assess whether a stock is over or undervalued relative to assets."
+            },
+            {
+              question: "What is the dividend yield?",
+              options: [
+                "Annual dividends per share divided by stock price",
+                "Total dividends divided by market cap",
+                "Dividend growth rate",
+                "Yield from dividend investments"
+              ],
+              correct: 0,
+              explanation: "Dividend yield shows the annual dividend payment as a percentage of the stock price, indicating the income return on investment."
+            },
+            {
+              question: "What is return on assets (ROA)?",
+              options: [
+                "Net income divided by total assets",
+                "Return from asset sales",
+                "Assets divided by returns",
+                "Return on alternative assets"
+              ],
+              correct: 0,
+              explanation: "ROA measures how efficiently a company uses its assets to generate profit, calculated by dividing net income by total assets."
+            },
+            {
+              question: "What is the quick ratio?",
+              options: [
+                "Liquid assets divided by current liabilities",
+                "How quickly assets can be sold",
+                "Quick analysis ratio",
+                "Speed of ratio calculations"
+              ],
+              correct: 0,
+              explanation: "The quick ratio measures a company's ability to pay short-term obligations using only the most liquid assets, excluding inventory from current assets."
+            }
+          ]
+        }
+      }
+    };
+
+    // =============================================================================
+    // UTILITY FUNCTIONS
+    // =============================================================================
+    
+    function saveEducationState() {
+      localStorage.setItem('educationProgress', JSON.stringify(appState.education.moduleProgress));
+    }
+
+    function showTab(tabName) {
+      // For this simplified version, we only show education content
+      const educationContent = document.getElementById('educationContent');
+      if (educationContent) {
+        educationContent.classList.remove('hidden');
+      }
+
+      // Update tab active state
+      const tabs = document.querySelectorAll('.tab-btn');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      
+      const activeTab = document.getElementById(tabName + 'Tab');
+      if (activeTab) {
+        activeTab.classList.add('active');
+      }
+
+      appState.currentTab = tabName;
+      
+      if (tabName === 'education') {
+        updateEducationProgress();
+      }
+    }
+
+    // =============================================================================
+    // EDUCATION FUNCTIONALITY
+    // =============================================================================
+    
+    function updateEducationProgress() {
+      const progress = appState.education.moduleProgress;
+      const modules = Object.keys(appState.education.questions);
+      
+      let completedCount = 0;
+      let totalQuizzes = 0;
+      let totalScore = 0;
+      let totalMaxScore = 0;
+
+      modules.forEach(module => {
+        if (progress[module]) {
+          totalQuizzes++;
+          totalScore += progress[module].score;
+          totalMaxScore += progress[module].total;
+          if (progress[module].passed) {
+            completedCount++;
+          }
+        }
+      });
+
+      document.getElementById('completedModules').textContent = completedCount;
+      document.getElementById('totalQuizzes').textContent = totalQuizzes;
+      
+      const averageScore = totalMaxScore > 0 ? Math.round((totalScore / totalMaxScore) * 100) : 0;
+      document.getElementById('averageScore').textContent = averageScore + '%';
+    }
+
+    function openEducationQuiz(topic) {
+      const topicData = {
+        fundamentals: {
+          title: 'Market Fundamentals',
+          description: 'Test your knowledge of basic market concepts, structure, and economic indicators'
+        },
+        technical: {
+          title: 'Technical Analysis',
+          description: 'Evaluate your understanding of chart patterns, indicators, and price action'
+        },
+        risk: {
+          title: 'Risk Management',
+          description: 'Assess your knowledge of position sizing, stop losses, and portfolio management'
+        },
+        psychology: {
+          title: 'Trading Psychology',
+          description: 'Test your understanding of emotional control and behavioral finance'
+        },
+        strategies: {
+          title: 'Advanced Strategies',
+          description: 'Challenge your knowledge of complex trading strategies and optimization'
+        },
+        analysis: {
+          title: 'Market Analysis',
+          description: 'Evaluate your skills in fundamental analysis and market research'
+        }
+      };
+
+      appState.education.currentTopic = topic;
+      appState.education.currentQuestion = 0;
+      appState.education.selectedAnswers = [];
+      appState.education.score = 0;
+
+      const modal = document.getElementById('educationModal');
+      const topicInfo = topicData[topic];
+      
+      document.getElementById('topicTitle').textContent = topicInfo.title;
+      document.getElementById('topicDescription').textContent = topicInfo.description;
+      document.getElementById('educationModalTitle').textContent = topicInfo.title + ' Quiz';
+      
+      const questions = appState.education.questions[topic];
+      document.getElementById('totalQuestions').textContent = questions.length;
+      
+      displayEducationQuestion();
+      modal.classList.remove('hidden');
+    }
+
+    function displayEducationQuestion() {
+      const topic = appState.education.currentTopic;
+      const questions = appState.education.questions[topic];
+      const currentQ = appState.education.currentQuestion;
+      const question = questions[currentQ];
+
+      document.getElementById('currentQuestion').textContent = currentQ + 1;
+      document.getElementById('questionText').textContent = question.question;
+      
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+
+      question.options.forEach((option, index) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'quiz-option';
+        optionDiv.textContent = option;
+        optionDiv.onclick = () => selectEducationOption(index);
+        optionsContainer.appendChild(optionDiv);
+      });
+
+      // Update progress bar
+      const progress = ((currentQ + 1) / questions.length) * 100;
+      document.getElementById('quizProgress').style.width = progress + '%';
+
+      // Update buttons
+      document.getElementById('prevQuestion').disabled = currentQ === 0;
+      document.getElementById('submitAnswer').disabled = true;
+      document.getElementById('nextQuestion').classList.add('hidden');
+      document.getElementById('finishQuiz').classList.add('hidden');
+      document.getElementById('feedbackContainer').classList.add('hidden');
+    }
+
+    function selectEducationOption(optionIndex) {
+      // Clear previous selections
+      document.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+
+      // Select current option
+      document.querySelectorAll('.quiz-option')[optionIndex].classList.add('selected');
+      
+      // Store answer
+      appState.education.selectedAnswers[appState.education.currentQuestion] = optionIndex;
+      
+      // Enable submit button
+      document.getElementById('submitAnswer').disabled = false;
+    }
+
+    function submitEducationAnswer() {
+      const topic = appState.education.currentTopic;
+      const questions = appState.education.questions[topic];
+      const currentQ = appState.education.currentQuestion;
+      const question = questions[currentQ];
+      const selectedAnswer = appState.education.selectedAnswers[currentQ];
+      const correctAnswer = question.correct;
+
+      // Show feedback
+      const feedbackContainer = document.getElementById('feedbackContainer');
+      const feedbackText = document.getElementById('feedbackText');
+      const explanationText = document.getElementById('explanationText');
+
+      if (selectedAnswer === correctAnswer) {
+        appState.education.score++;
+        feedbackContainer.className = 'mt-4 p-4 rounded-lg bg-green-600';
+        feedbackText.textContent = '✅ Correct!';
+        feedbackText.className = 'font-semibold mb-2 text-white';
+        
+        // Mark correct answer
+        document.querySelectorAll('.quiz-option')[selectedAnswer].classList.add('correct');
+      } else {
+        feedbackContainer.className = 'mt-4 p-4 rounded-lg bg-red-600';
+        feedbackText.textContent = '❌ Incorrect';
+        feedbackText.className = 'font-semibold mb-2 text-white';
+        
+        // Mark incorrect and correct answers
+        document.querySelectorAll('.quiz-option')[selectedAnswer].classList.add('incorrect');
+        document.querySelectorAll('.quiz-option')[correctAnswer].classList.add('correct');
+      }
+
+      explanationText.textContent = question.explanation;
+      explanationText.className = 'text-sm text-white';
+      feedbackContainer.classList.remove('hidden');
+
+      // Update score display
+      document.getElementById('currentScore').textContent = appState.education.score;
+      document.getElementById('maxScore').textContent = questions.length;
+
+      // Update buttons
+      document.getElementById('submitAnswer').classList.add('hidden');
+      
+      if (currentQ < questions.length - 1) {
+        document.getElementById('nextQuestion').classList.remove('hidden');
+      } else {
+        document.getElementById('finishQuiz').classList.remove('hidden');
+      }
+    }
+
+    function nextEducationQuestion() {
+      appState.education.currentQuestion++;
+      displayEducationQuestion();
+    }
+
+    function prevEducationQuestion() {
+      if (appState.education.currentQuestion > 0) {
+        appState.education.currentQuestion--;
+        displayEducationQuestion();
+      }
+    }
+
+    function finishEducationQuiz() {
+      const topic = appState.education.currentTopic;
+      const questions = appState.education.questions[topic];
+      const score = appState.education.score;
+      const total = questions.length;
+      const percentage = Math.round((score / total) * 100);
+      const passed = percentage >= 70;
+
+      // Save progress
+      appState.education.moduleProgress[topic] = {
+        score: score,
+        total: total,
+        percentage: percentage,
+        passed: passed,
+        completedAt: new Date().toISOString()
+      };
+      saveEducationState();
+
+      // Show results
+      const resultsIcon = document.getElementById('resultsIcon');
+      const resultsTitle = document.getElementById('resultsTitle');
+      const resultsScore = document.getElementById('resultsScore');
+      const resultsMessage = document.getElementById('resultsMessage');
+
+      if (passed) {
+        resultsIcon.textContent = '🎉';
+        resultsTitle.textContent = 'Congratulations!';
+        resultsTitle.className = 'text-2xl font-bold mb-2 text-green-400';
+        resultsMessage.textContent = 'You have successfully completed this module!';
+      } else {
+        resultsIcon.textContent = '📚';
+        resultsTitle.textContent = 'Keep Learning!';
+        resultsTitle.className = 'text-2xl font-bold mb-2 text-yellow-400';
+        resultsMessage.textContent = 'Review the material and try again to master this topic.';
+      }
+
+      resultsScore.textContent = `You scored ${score} out of ${total} (${percentage}%)`;
+
+      // Hide quiz content, show results
+      document.getElementById('topicInfo').classList.add('hidden');
+      document.querySelector('.mb-6:has(#currentQuestion)').classList.add('hidden');
+      document.getElementById('questionContainer').classList.add('hidden');
+      document.getElementById('feedbackContainer').classList.add('hidden');
+      document.querySelector('.flex.justify-between.items-center.mt-6').classList.add('hidden');
+      document.getElementById('quizResults').classList.remove('hidden');
+    }
+
+    function resetEducationQuiz() {
+      const topic = appState.education.currentTopic;
+      appState.education.currentQuestion = 0;
+      appState.education.selectedAnswers = [];
+      appState.education.score = 0;
+
+      // Show quiz content, hide results
+      document.getElementById('topicInfo').classList.remove('hidden');
+      document.querySelector('.mb-6:has(#currentQuestion)').classList.remove('hidden');
+      document.getElementById('questionContainer').classList.remove('hidden');
+      document.querySelector('.flex.justify-between.items-center.mt-6').classList.remove('hidden');
+      document.getElementById('quizResults').classList.add('hidden');
+
+      displayEducationQuestion();
+    }
+
+    function closeEducationModal() {
+      const modal = document.getElementById('educationModal');
+      modal.classList.add('hidden');
+      updateEducationProgress();
+    }
+
+    // =============================================================================
+    // INITIALIZATION
+    // =============================================================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set up education tab navigation
+      document.getElementById('educationTab').addEventListener('click', () => showTab('education'));
+      
+      // Set up quiz buttons
+      document.querySelectorAll('.quiz-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const topic = e.target.getAttribute('data-topic');
+          openEducationQuiz(topic);
+        });
+      });
+
+      // Set up education modal functionality
+      document.getElementById('closeEducation').addEventListener('click', closeEducationModal);
+      document.getElementById('submitAnswer').addEventListener('click', submitEducationAnswer);
+      document.getElementById('nextQuestion').addEventListener('click', nextEducationQuestion);
+      document.getElementById('prevQuestion').addEventListener('click', prevEducationQuestion);
+      document.getElementById('finishQuiz').addEventListener('click', finishEducationQuiz);
+      document.getElementById('retakeQuiz').addEventListener('click', resetEducationQuiz);
+      document.getElementById('closeQuizResults').addEventListener('click', closeEducationModal);
+
+      // Set up keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeEducationModal();
+        }
+        
+        // Tab navigation with Alt + number
+        if (e.altKey && e.key >= '1' && e.key <= '6') {
+          e.preventDefault();
+          switch(e.key) {
+            case '1': showTab('onboarding'); break;
+            case '2': showTab('syllabus'); break;
+            case '3': showTab('training'); break;
+            case '4': showTab('journal'); break;
+            case '5': showTab('dashboard'); break;
+            case '6': showTab('education'); break;
+          }
+        }
+      });
+
+      // Initialize education tab
+      showTab('education');
+      updateEducationProgress();
+    });
+  </script>
+</body>
+</html>

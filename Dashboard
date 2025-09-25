@@ -1,0 +1,3168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Griffin's Rise: Advanced Trading Journal — Pro Edition</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* === RESET & BASE STYLES === */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* === UTILITY CLASSES === */
+    .hidden { display: none !important; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-6 { gap: 1.5rem; }
+    .p-4 { padding: 1rem; }
+    .p-6 { padding: 1.5rem; }
+    .p-8 { padding: 2rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .w-full { width: 100%; }
+    .max-w-4xl { max-width: 56rem; }
+    .max-w-6xl { max-width: 72rem; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .rounded { border-radius: 0.375rem; }
+    .rounded-lg { border-radius: 0.5rem; }
+    .rounded-xl { border-radius: 0.75rem; }
+    .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+    .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+    .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .font-bold { font-weight: 700; }
+    .font-semibold { font-weight: 600; }
+    .font-extrabold { font-weight: 800; }
+    .text-center { text-align: center; }
+    .cursor-pointer { cursor: pointer; }
+    .transition { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter; }
+
+    /* === COLOR CLASSES === */
+    .bg-slate-800 { background-color: #1e293b; }
+    .bg-slate-700 { background-color: #334155; }
+    .bg-blue-600 { background-color: #2563eb; }
+    .bg-blue-700 { background-color: #1d4ed8; }
+    .bg-green-600 { background-color: #16a34a; }
+    .bg-red-600 { background-color: #dc2626; }
+    .bg-yellow-500 { background-color: #eab308; }
+    .bg-purple-600 { background-color: #9333ea; }
+    .text-white { color: #ffffff; }
+    .text-blue-400 { color: #60a5fa; }
+    .text-green-400 { color: #4ade80; }
+    .text-yellow-400 { color: #facc15; }
+    .text-red-400 { color: #f87171; }
+    .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
+    .hover\:bg-green-700:hover { background-color: #15803d; }
+
+    /* === COMPONENT STYLES === */
+    .container {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .container { max-width: 768px; }
+      .md\:flex { display: flex; }
+      .md\:flex-row { flex-direction: row; }
+      .md\:w-1\/2 { width: 50%; }
+      .md\:w-2\/3 { width: 66.666667%; }
+      .md\:w-1\/3 { width: 33.333333%; }
+    }
+
+    @media (min-width: 1024px) {
+      .container { max-width: 1024px; }
+    }
+
+    /* === CUSTOM COMPONENT STYLES === */
+    .tab-btn {
+      background-color: #334155;
+      color: #e2e8f0;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+    }
+
+    .tab-btn:hover {
+      background-color: #475569;
+    }
+
+    .tab-btn.active {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    .card {
+      background-color: #1e293b;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border: 1px solid #334155;
+    }
+
+    .form-input {
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      color: #e2e8f0;
+      width: 100%;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+
+    .btn-success {
+      background-color: #16a34a;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background-color: #15803d;
+    }
+
+    .btn-danger {
+      background-color: #dc2626;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #b91c1c;
+    }
+
+    /* === MODAL STYLES === */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: #1e293b;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border: 1px solid #334155;
+    }
+
+    /* === QUIZ STYLES === */
+    .quiz-question {
+      background-color: #0f172a;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #334155;
+    }
+
+    .quiz-option {
+      background-color: #334155;
+      border: 1px solid #475569;
+      border-radius: 0.375rem;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-option:hover {
+      background-color: #475569;
+    }
+
+    .quiz-option.selected {
+      background-color: #2563eb;
+      border-color: #3b82f6;
+    }
+
+    .quiz-option.correct {
+      background-color: #16a34a;
+      border-color: #22c55e;
+    }
+
+    .quiz-option.incorrect {
+      background-color: #dc2626;
+      border-color: #ef4444;
+    }
+
+    .progress-bar {
+      background-color: #334155;
+      height: 0.5rem;
+      border-radius: 0.25rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background-color: #2563eb;
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    /* === TABLE STYLES === */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .table th,
+    .table td {
+      border: 1px solid #334155;
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    .table th {
+      background-color: #334155;
+      font-weight: 600;
+    }
+
+    .table tr:nth-child(even) {
+      background-color: #1e293b;
+    }
+
+    /* === DASHBOARD STYLES === */
+    .stat-card {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid #475569;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #94a3b8;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* === PHASE CARD STYLES === */
+    .phase-card {
+      background: linear-gradient(135deg, #1e293b 0%, #2563eb 20%);
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #334155;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .phase-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .phase-header {
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid #334155;
+    }
+
+    .phase-header:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .phase-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      background-color: #0f172a;
+    }
+
+    .phase-content.expanded {
+      max-height: 1000px;
+      padding: 1.5rem;
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 768px) {
+      .container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      
+      .modal-content {
+        width: 95%;
+        padding: 1rem;
+      }
+      
+      .phase-header {
+        padding: 1rem;
+      }
+      
+      .stat-card {
+        padding: 1rem;
+      }
+      
+      .text-3xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+    }
+
+    /* === ACCESSIBILITY IMPROVEMENTS === */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .focus\:outline-none:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+
+    .focus\:ring-2:focus {
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5);
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .animate-pulse {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+      50% { transform: none; animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+    }
+
+    .animate-bounce {
+      animation: bounce 1s infinite;
+    }
+
+    /* === CONFETTI ANIMATION === */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #facc15;
+      animation: confetti-fall 3s infinite linear;
+    }
+
+    .confetti:nth-child(1) { left: 10%; animation-delay: 0s; background: #f87171; }
+    .confetti:nth-child(2) { left: 20%; animation-delay: 0.2s; background: #60a5fa; }
+    .confetti:nth-child(3) { left: 30%; animation-delay: 0.4s; background: #4ade80; }
+    .confetti:nth-child(4) { left: 40%; animation-delay: 0.6s; background: #facc15; }
+    .confetti:nth-child(5) { left: 50%; animation-delay: 0.8s; background: #a78bfa; }
+    .confetti:nth-child(6) { left: 60%; animation-delay: 1s; background: #fb7185; }
+    .confetti:nth-child(7) { left: 70%; animation-delay: 1.2s; background: #34d399; }
+    .confetti:nth-child(8) { left: 80%; animation-delay: 1.4s; background: #fbbf24; }
+    .confetti:nth-child(9) { left: 90%; animation-delay: 1.6s; background: #818cf8; }
+    .confetti:nth-child(10) { left: 15%; animation-delay: 1.8s; background: #f472b6; }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* === TROPHY ANIMATION === */
+    .trophy-animation {
+      animation: trophy-glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes trophy-glow {
+      0% {
+        filter: drop-shadow(0 0 10px #facc15);
+        transform: scale(1);
+      }
+      100% {
+        filter: drop-shadow(0 0 20px #facc15) drop-shadow(0 0 30px #f59e0b);
+        transform: scale(1.1);
+      }
+    }
+
+    /* === TRAINING MANUAL STYLES === */
+    .training-nav-btn {
+      background: #334155;
+      color: #e2e8f0;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .training-nav-btn:hover {
+      background: #475569;
+      transform: translateY(-1px);
+    }
+
+    .training-nav-btn.active {
+      background: linear-gradient(to right, #2563eb, #3b82f6);
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .training-module {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .walkthrough-step {
+      border-left: 3px solid #3b82f6;
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === JOURNAL ENHANCEMENTS === */
+    .table.edit-mode td {
+      border: 1px dashed #3b82f6;
+      transition: all 0.3s ease;
+    }
+
+    .table.edit-mode td:hover {
+      background-color: #1e293b !important;
+      transform: scale(1.02);
+    }
+
+    /* === 3D PRO EDITION BADGE === */
+    .pro-edition-badge {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 25%, #d97706 50%, #b45309 75%, #92400e 100%);
+      color: #1f2937;
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: inline-block;
+      position: relative;
+      box-shadow: 
+        0 6px 20px rgba(251, 191, 36, 0.4),
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+      border: 2px solid #fbbf24;
+      transform: perspective(300px) rotateX(15deg);
+      transition: all 0.3s ease;
+      text-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.8),
+        0 -1px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .pro-edition-badge:hover {
+      transform: perspective(300px) rotateX(15deg) scale(1.05);
+      box-shadow: 
+        0 8px 25px rgba(251, 191, 36, 0.6),
+        0 4px 15px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .pro-edition-badge::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+      border-radius: 25px;
+      z-index: -1;
+      filter: blur(4px);
+      opacity: 0.7;
+    }
+
+    .pro-edition-badge::after {
+      content: '✨';
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      animation: sparkle 2s infinite ease-in-out;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.5; transform: translateY(-50%) scale(0.8); }
+      50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+    }
+
+    /* === TOGGLE BUTTON STYLES === */
+    .toggle-btn {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: white;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .toggle-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+
+    .toggle-btn.completed {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    }
+
+    .toggle-btn.completed:hover {
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-sm {
+      font-size: 0.75rem;
+      padding: 0.375rem 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- === HEADER === -->
+  <header class="bg-slate-800 shadow-lg py-4 mb-8" role="banner">
+    <div class="container mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 flex items-center justify-center">
+            <img src="public/griffin-rise-log.png" alt="Griffin Rise Logo" class="w-16 h-16 rounded-lg shadow-lg border-2 border-yellow-400">
+          </div>
+          <div>
+            <h1 class="text-3xl font-extrabold text-white">
+              Griffin Rise: <span class="text-yellow-400">Advanced Trading Journal</span>
+            </h1>
+            <div class="pro-edition-badge">
+              PRO EDITION
+            </div>
+          </div>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex flex-wrap gap-2" role="navigation" aria-label="Main navigation">
+          <button id="onboardingTab" class="tab-btn" aria-controls="onboardingContent">
+            🚀 Onboarding
+          </button>
+          <button id="syllabusTab" class="tab-btn" aria-controls="syllabusContent">
+            📚 Syllabus
+          </button>
+          <button id="trainingTab" class="tab-btn" aria-controls="trainingContent">
+            🎯 Training Manual
+          </button>
+          <button id="journalTab" class="tab-btn" aria-controls="journalContent">
+            📝 Journal
+          </button>
+          <button id="dashboardTab" class="tab-btn" aria-controls="dashboardContent">
+            🏠 Dashboard
+          </button>
+          <button id="quizBtn" class="tab-btn bg-purple-600 hover:bg-purple-700">
+            🧠 Quiz
+          </button>
+          <button id="logoutBtn" class="tab-btn bg-red-600 hover:bg-red-700">
+            🚪 Logout
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- === MAIN CONTENT === -->
+  <main class="container mx-auto max-w-6xl">
+
+    <!-- === SYLLABUS SECTION === -->
+    <section id="syllabusContent" class="fade-in" role="main" aria-labelledby="syllabusHeading">
+      <div class="card mb-8">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="text-4xl">📚</div>
+          <div>
+            <h2 id="syllabusHeading" class="text-3xl font-bold text-white">Trading Mastery Syllabus</h2>
+            <p class="text-lg text-blue-400">7 comprehensive phases to trading excellence</p>
+          </div>
+        </div>
+        
+        <!-- Progress Overview -->
+        <div class="bg-slate-700 rounded-lg p-4 mb-6">
+          <h3 class="text-xl font-semibold mb-3 text-white">Your Progress</h3>
+          <div class="progress-bar mb-2">
+            <div id="overallProgress" class="progress-fill" style="width: 0%"></div>
+          </div>
+          <p id="progressText" class="text-sm text-blue-400">0% Complete</p>
+        </div>
+
+        <!-- Phase Cards -->
+        <div class="space-y-6">
+          <!-- Phase 1: Foundation -->
+          <div class="phase-card" data-phase="1">
+            <div class="phase-header" onclick="togglePhase(1)" tabindex="0" role="button" aria-expanded="false">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3 class="text-xl font-bold text-white">Phase 1: Foundation & Mindset</h3>
+                  <p class="text-blue-400">Master the fundamentals of trading psychology and platform setup</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="phase1Status" class="bg-slate-600 text-white px-3 py-1 rounded-full text-sm">
+                    🔒 Locked
+                  </span>
+                  <span class="text-2xl transition-transform" id="phase1Arrow">▶</span>
+                </div>
+              </div>
+            </div>
+            <div class="phase-content" id="phase1Content">
+              <div class="space-y-4">
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">📖 Lesson 1: Trading Psychology</h4>
+                  <p class="text-sm mb-3">Develop the right mindset for successful trading</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Understand risk management principles</li>
+                    <li>• Learn emotional control techniques</li>
+                    <li>• Develop discipline and patience</li>
+                  </ul>
+                </div>
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">🔧 Lesson 2: Platform Setup</h4>
+                  <p class="text-sm mb-3">Configure your trading environment</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Choose and setup trading platforms</li>
+                    <li>• Configure charts and indicators</li>
+                    <li>• Practice with demo accounts</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mb-4">
+                <input type="checkbox" id="phase1Toggle" onchange="togglePhaseCompletion(1)" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <label for="phase1Toggle" class="text-white">Mark Phase 1 as Complete</label>
+              </div>
+              <button class="btn btn-success mt-4" onclick="completePhase(1)">
+                  Complete Phase 1
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2: Technical Analysis -->
+          <div class="phase-card" data-phase="2">
+            <div class="phase-header" onclick="togglePhase(2)" tabindex="0" role="button" aria-expanded="false">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3 class="text-xl font-bold text-white">Phase 2: Technical Analysis</h3>
+                  <p class="text-blue-400">Master chart patterns and technical indicators</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="phase2Status" class="bg-slate-600 text-white px-3 py-1 rounded-full text-sm">
+                    🔒 Locked
+                  </span>
+                  <span class="text-2xl transition-transform" id="phase2Arrow">▶</span>
+                </div>
+              </div>
+            </div>
+            <div class="phase-content" id="phase2Content">
+              <div class="space-y-4">
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">📈 Lesson 3: Chart Patterns</h4>
+                  <p class="text-sm mb-3">Identify profitable chart patterns</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Support and resistance levels</li>
+                    <li>• Trend lines and channels</li>
+                    <li>• Reversal and continuation patterns</li>
+                  </ul>
+                </div>
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">⚙️ Lesson 4: Technical Indicators</h4>
+                  <p class="text-sm mb-3">Use indicators to confirm trades</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Moving averages and oscillators</li>
+                    <li>• Volume analysis</li>
+                    <li>• Divergence patterns</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mb-4">
+                <input type="checkbox" id="phase2Toggle" onchange="togglePhaseCompletion(2)" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <label for="phase2Toggle" class="text-white">Mark Phase 2 as Complete</label>
+              </div>
+              <button class="btn btn-success mt-4" onclick="completePhase(2)" disabled>
+                  Complete Phase 2
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 3: Strategy Development -->
+          <div class="phase-card" data-phase="3">
+            <div class="phase-header" onclick="togglePhase(3)" tabindex="0" role="button" aria-expanded="false">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3 class="text-xl font-bold text-white">Phase 3: Strategy Development</h3>
+                  <p class="text-blue-400">Create and backtest your trading strategies</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="phase3Status" class="bg-slate-600 text-white px-3 py-1 rounded-full text-sm">
+                    🔒 Locked
+                  </span>
+                  <span class="text-2xl transition-transform" id="phase3Arrow">▶</span>
+                </div>
+              </div>
+            </div>
+            <div class="phase-content" id="phase3Content">
+              <div class="space-y-4">
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">🎯 Lesson 5: Strategy Building</h4>
+                  <p class="text-sm mb-3">Develop systematic trading approaches</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Define entry and exit rules</li>
+                    <li>• Set risk-reward ratios</li>
+                    <li>• Create trading plans</li>
+                  </ul>
+                </div>
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">📊 Lesson 6: Backtesting</h4>
+                  <p class="text-sm mb-3">Test strategies on historical data</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Historical performance analysis</li>
+                    <li>• Optimize parameters</li>
+                    <li>• Validate strategy effectiveness</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mb-4">
+                <input type="checkbox" id="phase3Toggle" onchange="togglePhaseCompletion(3)" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <label for="phase3Toggle" class="text-white">Mark Phase 3 as Complete</label>
+              </div>
+              <button class="btn btn-success mt-4" onclick="completePhase(3)" disabled>
+                  Complete Phase 3
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 4: Risk Management -->
+          <div class="phase-card" data-phase="4">
+            <div class="phase-header" onclick="togglePhase(4)" tabindex="0" role="button" aria-expanded="false">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3 class="text-xl font-bold text-white">Phase 4: Risk Management</h3>
+                  <p class="text-blue-400">Master position sizing and portfolio protection</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="phase4Status" class="bg-slate-600 text-white px-3 py-1 rounded-full text-sm">
+                    🔒 Locked
+                  </span>
+                  <span class="text-2xl transition-transform" id="phase4Arrow">▶</span>
+                </div>
+              </div>
+            </div>
+            <div class="phase-content" id="phase4Content">
+              <div class="space-y-4">
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">⚖️ Lesson 7: Position Sizing</h4>
+                  <p class="text-sm mb-3">Calculate optimal trade sizes</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Fixed percentage method</li>
+                    <li>• Kelly criterion</li>
+                    <li>• Volatility-based sizing</li>
+                  </ul>
+                </div>
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">🛡️ Lesson 8: Portfolio Protection</h4>
+                  <p class="text-sm mb-3">Protect your capital</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Stop-loss strategies</li>
+                    <li>• Diversification principles</li>
+                    <li>• Maximum drawdown limits</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mb-4">
+                <input type="checkbox" id="phase4Toggle" onchange="togglePhaseCompletion(4)" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <label for="phase4Toggle" class="text-white">Mark Phase 4 as Complete</label>
+              </div>
+              <button class="btn btn-success mt-4" onclick="completePhase(4)" disabled>
+                  Complete Phase 4
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 5: Advanced Strategies -->
+          <div class="phase-card" data-phase="5">
+            <div class="phase-header" onclick="togglePhase(5)" tabindex="0" role="button" aria-expanded="false">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3 class="text-xl font-bold text-white">Phase 5: Advanced Strategies</h3>
+                  <p class="text-blue-400">Professional trading techniques and optimization</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="phase5Status" class="bg-slate-600 text-white px-3 py-1 rounded-full text-sm">
+                    🔒 Locked
+                  </span>
+                  <span class="text-2xl transition-transform" id="phase5Arrow">▶</span>
+                </div>
+              </div>
+            </div>
+            <div class="phase-content" id="phase5Content">
+              <div class="space-y-4">
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">🏆 Lesson 9: Advanced Techniques</h4>
+                  <p class="text-sm mb-3">Professional trading methods</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Options strategies</li>
+                    <li>• Algorithmic trading basics</li>
+                    <li>• Market microstructure</li>
+                  </ul>
+                </div>
+                <div class="bg-slate-800 rounded-lg p-4">
+                  <h4 class="font-semibold text-white mb-2">💎 Lesson 10: Mastery</h4>
+                  <p class="text-sm mb-3">Achieve consistent profitability</p>
+                  <ul class="text-sm space-y-1 text-blue-400">
+                    <li>• Performance optimization</li>
+                    <li>• Emotional mastery</li>
+                    <li>• Continuous improvement</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mb-4">
+                <input type="checkbox" id="phase5Toggle" onchange="togglePhaseCompletion(5)" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <label for="phase5Toggle" class="text-white">Mark Phase 5 as Complete</label>
+              </div>
+              <button class="btn btn-success mt-4" onclick="completePhase(5)" disabled>
+                  Complete Phase 5
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 6: Market Psychology & Sentiment -->
+          <div class="phase-card" data-phase="6">
+            <div class="phase-header" onclick="togglePhase(6)" tabindex="0" role="button" aria-expanded="false">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3 class="text-xl font-bold text-white">Phase 6: Market Psychology & Sentiment</h3>
+                  <p class="text-blue-400">Master market sentiment analysis and crowd psychology</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="phase6Status" class="bg-slate-600 text-white px-3 py-1 rounded-full text-sm">
+                    🔒 Locked
+                  </span>
+                  <span class="text-2xl transition-transform" id="phase6Arrow">▶</span>
+                </div>
+              </div>
+            </div>
+            <div class="phase-content" id="phase6Content">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="lesson-card">
+                  <h4 class="text-lg font-semibold mb-2 text-white flex items-center gap-2">
+                    🧠 Lesson 11: Market Sentiment Analysis
+                  </h4>
+                  <p class="text-sm text-blue-400">Understanding market emotions and investor behavior</p>
+                  <div class="mt-3 space-y-1">
+                    <p class="text-sm text-slate-300">• Fear and greed indicators</p>
+                    <p class="text-sm text-slate-300">• Sentiment surveys and VIX analysis</p>
+                    <p class="text-sm text-slate-300">• Social media sentiment tracking</p>
+                  </div>
+                  <a href="#" class="btn btn-outline mt-3">📖 Study Materials</a>
+                </div>
+                <div class="lesson-card">
+                  <h4 class="text-lg font-semibold mb-2 text-white flex items-center gap-2">
+                    👥 Lesson 12: Crowd Psychology
+                  </h4>
+                  <p class="text-sm text-blue-400">Learn to profit from herd mentality</p>
+                  <div class="mt-3 space-y-1">
+                    <p class="text-sm text-slate-300">• Contrarian trading strategies</p>
+                    <p class="text-sm text-slate-300">• Market bubble identification</p>
+                    <p class="text-sm text-slate-300">• Mass psychology patterns</p>
+                  </div>
+                  <a href="#" class="btn btn-outline mt-3">📖 Study Materials</a>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mb-4">
+                <input type="checkbox" id="phase6Toggle" onchange="togglePhaseCompletion(6)" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <label for="phase6Toggle" class="text-white">Mark Phase 6 as Complete</label>
+              </div>
+              <button class="btn btn-success mt-4" onclick="completePhase(6)" disabled>
+                Complete Phase 6
+              </button>
+            </div>
+          </div>
+
+          <!-- Phase 7: Cryptocurrency & DeFi Trading -->
+          <div class="phase-card" data-phase="7">
+            <div class="phase-header" onclick="togglePhase(7)" tabindex="0" role="button" aria-expanded="false">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3 class="text-xl font-bold text-white">Phase 7: Cryptocurrency & DeFi Trading</h3>
+                  <p class="text-blue-400">Master digital assets and decentralized finance</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="phase7Status" class="bg-slate-600 text-white px-3 py-1 rounded-full text-sm">
+                    🔒 Locked
+                  </span>
+                  <span class="text-2xl transition-transform" id="phase7Arrow">▶</span>
+                </div>
+              </div>
+            </div>
+            <div class="phase-content" id="phase7Content">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="lesson-card">
+                  <h4 class="text-lg font-semibold mb-2 text-white flex items-center gap-2">
+                    ₿ Lesson 13: Crypto Fundamentals
+                  </h4>
+                  <p class="text-sm text-blue-400">Understanding blockchain and digital assets</p>
+                  <div class="mt-3 space-y-1">
+                    <p class="text-sm text-slate-300">• Blockchain technology basics</p>
+                    <p class="text-sm text-slate-300">• Major cryptocurrencies analysis</p>
+                    <p class="text-sm text-slate-300">• Tokenomics and value drivers</p>
+                  </div>
+                  <a href="#" class="btn btn-outline mt-3">📖 Study Materials</a>
+                </div>
+                <div class="lesson-card">
+                  <h4 class="text-lg font-semibold mb-2 text-white flex items-center gap-2">
+                    🏦 Lesson 14: DeFi & Advanced Crypto
+                  </h4>
+                  <p class="text-sm text-blue-400">Decentralized finance and yield strategies</p>
+                  <div class="mt-3 space-y-1">
+                    <p class="text-sm text-slate-300">• DeFi protocols and yield farming</p>
+                    <p class="text-sm text-slate-300">• NFT trading strategies</p>
+                    <p class="text-sm text-slate-300">• Layer 2 solutions and scaling</p>
+                  </div>
+                  <a href="#" class="btn btn-outline mt-3">📖 Study Materials</a>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mb-4">
+                <input type="checkbox" id="phase7Toggle" onchange="togglePhaseCompletion(7)" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <label for="phase7Toggle" class="text-white">Mark Phase 7 as Complete</label>
+              </div>
+              <button class="btn btn-success mt-4" onclick="completePhase(7)" disabled>
+                Complete Phase 7
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === JOURNAL SECTION === -->
+    <section id="journalContent" class="hidden fade-in" role="main" aria-labelledby="journalHeading">
+      <div class="card mb-8">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="text-4xl">📝</div>
+          <div>
+            <h2 id="journalHeading" class="text-3xl font-bold text-white">Trading Journal</h2>
+            <p class="text-lg text-blue-400">Track and analyze your trading performance</p>
+          </div>
+        </div>
+
+        <!-- Journal Entry Form -->
+        <form id="journalForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <div>
+            <label for="tradeDate" class="block text-sm font-medium text-white mb-1">Date</label>
+            <input type="date" id="tradeDate" class="form-input" required>
+          </div>
+          <div>
+            <label for="symbol" class="block text-sm font-medium text-white mb-1">Symbol</label>
+            <input type="text" id="symbol" class="form-input" placeholder="e.g., BTCUSDT" required>
+          </div>
+          <div>
+            <label for="direction" class="block text-sm font-medium text-white mb-1">Direction</label>
+            <select id="direction" class="form-input" required>
+              <option value="">Select Direction</option>
+              <option value="Long">Long</option>
+              <option value="Short">Short</option>
+            </select>
+          </div>
+          <div>
+            <label for="quantity" class="block text-sm font-medium text-white mb-1">Quantity</label>
+            <input type="number" id="quantity" class="form-input" step="0.01" placeholder="0.00" required>
+          </div>
+          <div>
+            <label for="entryPrice" class="block text-sm font-medium text-white mb-1">Entry Price</label>
+            <input type="number" id="entryPrice" class="form-input" step="0.01" placeholder="0.00" required>
+          </div>
+          <div>
+            <label for="exitPrice" class="block text-sm font-medium text-white mb-1">Exit Price</label>
+            <input type="number" id="exitPrice" class="form-input" step="0.01" placeholder="0.00">
+          </div>
+          <div>
+            <label for="stopLoss" class="block text-sm font-medium text-white mb-1">Stop Loss</label>
+            <input type="number" id="stopLoss" class="form-input" step="0.01" placeholder="0.00">
+          </div>
+          <div>
+            <label for="takeProfit" class="block text-sm font-medium text-white mb-1">Take Profit</label>
+            <input type="number" id="takeProfit" class="form-input" step="0.01" placeholder="0.00">
+          </div>
+          <div class="md:col-span-2">
+            <label for="strategy" class="block text-sm font-medium text-white mb-1">Strategy</label>
+            <input type="text" id="strategy" class="form-input" placeholder="e.g., Breakout, Reversal, Trend Following">
+          </div>
+          <div class="md:col-span-2">
+            <label for="notes" class="block text-sm font-medium text-white mb-1">Notes</label>
+            <textarea id="notes" class="form-input" rows="3" placeholder="Trade rationale, market conditions, emotions..."></textarea>
+          </div>
+          <div class="md:col-span-2">
+            <button type="submit" class="btn btn-primary w-full">Add Trade Entry</button>
+          </div>
+        </form>
+
+        <!-- Trades Table -->
+        <div class="overflow-x-auto">
+          <table class="table" id="tradesTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Symbol</th>
+                <th>Direction</th>
+                <th>Quantity</th>
+                <th>Entry</th>
+                <th>Exit</th>
+                <th>P&L</th>
+                <th>Strategy</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tradesTableBody">
+              <!-- Trades will be populated here -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Journal Summary -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-slate-700 rounded-lg p-4 text-center">
+            <div id="journalTotalTrades" class="text-2xl font-bold text-blue-400">0</div>
+            <div class="text-sm text-blue-400">Total Entries</div>
+          </div>
+          <div class="bg-slate-700 rounded-lg p-4 text-center">
+            <div id="journalWinRate" class="text-2xl font-bold text-green-400">0%</div>
+            <div class="text-sm text-blue-400">Win Rate</div>
+          </div>
+          <div class="bg-slate-700 rounded-lg p-4 text-center">
+            <div id="journalPnL" class="text-2xl font-bold text-yellow-400">$0</div>
+            <div class="text-sm text-blue-400">Total P&L</div>
+          </div>
+        </div>
+
+        <!-- Journal Action Buttons -->
+        <div class="mt-6 flex flex-wrap gap-4 justify-center">
+          <button onclick="exportTradesCSV()" class="btn bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+            📊 Export CSV
+          </button>
+          <button onclick="clearAllTrades()" class="btn bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+            🗑️ Clear All
+          </button>
+          <button onclick="openEditMode()" class="btn bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+            ✏️ Edit Trades
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- === DASHBOARD SECTION === -->
+    <section id="dashboardContent" class="hidden fade-in" role="main" aria-labelledby="dashboardHeading">
+      <div class="card mb-8">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="text-4xl">🏠</div>
+          <div>
+            <h2 id="dashboardHeading" class="text-3xl font-bold text-white">Trading Dashboard</h2>
+            <p class="text-lg text-blue-400">Complete overview of your trading performance</p>
+          </div>
+        </div>
+
+        <!-- Dashboard Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <!-- Total Entries -->
+          <div class="bg-slate-700 rounded-lg p-6 text-center">
+            <div class="text-3xl font-bold text-blue-400" id="dashTotalEntries">0</div>
+            <div class="text-sm text-slate-300">Total Entries</div>
+          </div>
+          
+          <!-- Win Rate -->
+          <div class="bg-slate-700 rounded-lg p-6 text-center">
+            <div class="text-3xl font-bold text-green-400" id="dashWinRate">0%</div>
+            <div class="text-sm text-slate-300">Win Rate</div>
+          </div>
+          
+          <!-- Total P&L -->
+          <div class="bg-slate-700 rounded-lg p-6 text-center">
+            <div class="text-3xl font-bold" id="dashTotalPL">$0.00</div>
+            <div class="text-sm text-slate-300">Total P&L</div>
+          </div>
+          
+          <!-- Average P&L -->
+          <div class="bg-slate-700 rounded-lg p-6 text-center">
+            <div class="text-3xl font-bold text-yellow-400" id="dashAvgPL">$0.00</div>
+            <div class="text-sm text-slate-300">Average P&L</div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <!-- Win/Loss Chart -->
+          <div class="bg-slate-700 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-white mb-4">Win/Loss Distribution</h3>
+            <div class="relative h-64">
+              <canvas id="winLossChart" class="w-full h-full"></canvas>
+            </div>
+          </div>
+          
+          <!-- Cumulative P&L Chart -->
+          <div class="bg-slate-700 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-white mb-4">Cumulative P&L</h3>
+            <div class="relative h-64">
+              <canvas id="cumulativePLChart" class="w-full h-full"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- All Trades Table -->
+        <div class="bg-slate-700 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-white mb-4">All Trades</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-600">
+                  <th class="text-left py-2 px-3 text-blue-400">Date</th>
+                  <th class="text-left py-2 px-3 text-blue-400">Symbol</th>
+                  <th class="text-left py-2 px-3 text-blue-400">Type</th>
+                  <th class="text-right py-2 px-3 text-blue-400">Entry</th>
+                  <th class="text-right py-2 px-3 text-blue-400">Exit</th>
+                  <th class="text-right py-2 px-3 text-blue-400">P&L</th>
+                  <th class="text-left py-2 px-3 text-blue-400">Status</th>
+                </tr>
+              </thead>
+              <tbody id="dashboardTradesTable" class="text-white">
+                <tr>
+                  <td colspan="7" class="text-center py-8 text-slate-400">No trades recorded yet</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === TRAINING MANUAL SECTION === -->
+    <section id="trainingContent" class="hidden fade-in" role="main" aria-labelledby="trainingHeading">
+      <div class="card mb-8">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="text-4xl">🎯</div>
+          <div>
+            <h2 id="trainingHeading" class="text-3xl font-bold text-white">Trading Manual</h2>
+            <p class="text-lg text-blue-400">Comprehensive 7-phase training with step-by-step instructions</p>
+          </div>
+        </div>
+
+        <!-- Training Navigation -->
+        <div class="flex flex-wrap gap-2 mb-6">
+          <button onclick="showTrainingModule(1)" class="training-nav-btn active" id="module1Btn">Module 1: Foundation</button>
+          <button onclick="showTrainingModule(2)" class="training-nav-btn" id="module2Btn">Module 2: Technical Analysis</button>
+          <button onclick="showTrainingModule(3)" class="training-nav-btn" id="module3Btn">Module 3: Strategy Development</button>
+          <button onclick="showTrainingModule(4)" class="training-nav-btn" id="module4Btn">Module 4: Risk Management</button>
+          <button onclick="showTrainingModule(5)" class="training-nav-btn" id="module5Btn">Module 5: Advanced Strategies</button>
+          <button onclick="showTrainingModule(6)" class="training-nav-btn" id="module6Btn">Module 6: Market Psychology</button>
+          <button onclick="showTrainingModule(7)" class="training-nav-btn" id="module7Btn">Module 7: Crypto & DeFi</button>
+        </div>
+
+        <!-- Module 1: Foundation & Mindset -->
+        <div id="trainingModule1" class="training-module">
+          <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 mb-6">
+            <h3 class="text-2xl font-bold text-white mb-2">📚 Module 1: Foundation & Mindset</h3>
+            <p class="text-blue-100">Build the psychological foundation for successful trading</p>
+          </div>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-slate-700 rounded-lg p-6">
+              <h4 class="text-xl font-semibold text-yellow-400 mb-4">🔧 Step 1: Platform Setup Walkthrough</h4>
+              <div class="space-y-3">
+                <div class="walkthrough-step">
+                  <h5 class="font-semibold text-white mb-2">1. Download Trading Platform</h5>
+                  <p class="text-sm text-slate-300 mb-2">Choose a professional trading platform (MT4, MT5, TradingView, etc.)</p>
+                  <div class="flex items-center gap-2 mb-2">
+                    <input type="checkbox" class="form-checkbox text-blue-600"> 
+                    <span class="text-sm">Download and install chosen platform</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <input type="checkbox" class="form-checkbox text-blue-600"> 
+                    <span class="text-sm">Create demo account with $10,000 virtual capital</span>
+                  </div>
+                </div>
+                
+                <div class="walkthrough-step">
+                  <h5 class="font-semibold text-white mb-2">2. Chart Configuration</h5>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Set up 4-hour and daily timeframes</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Add 20 & 50 moving averages</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Configure RSI (14) and MACD indicators</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-slate-700 rounded-lg p-6">
+              <h4 class="text-xl font-semibold text-green-400 mb-4">🧠 Step 2: Psychology Mastery</h4>
+              <div class="space-y-3">
+                <div class="walkthrough-step">
+                  <h5 class="font-semibold text-white mb-2">Daily Routine Setup</h5>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Create pre-market analysis routine (30 min)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Set daily risk limits (max 2% account risk)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Write trading rules document</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Practice 10-minute daily meditation</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 2: Technical Analysis -->
+        <div id="trainingModule2" class="training-module hidden">
+          <div class="bg-gradient-to-r from-green-600 to-teal-600 rounded-lg p-6 mb-6">
+            <h3 class="text-2xl font-bold text-white mb-2">📈 Module 2: Technical Analysis</h3>
+            <p class="text-green-100">Master chart patterns and technical indicators</p>
+          </div>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-slate-700 rounded-lg p-6">
+              <h4 class="text-xl font-semibold text-yellow-400 mb-4">📊 Chart Pattern Recognition</h4>
+              <div class="space-y-4">
+                <div class="walkthrough-step">
+                  <h5 class="font-semibold text-white mb-2">Support & Resistance Mastery</h5>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Identify 5 key levels on EUR/USD daily chart</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Mark psychological levels (00, 50 levels)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Practice drawing trend lines on 10 charts</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="walkthrough-step">
+                  <h5 class="font-semibold text-white mb-2">Advanced Patterns</h5>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Study 5 head & shoulders patterns</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Identify 3 triangle breakouts this week</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-slate-700 rounded-lg p-6">
+              <h4 class="text-xl font-semibold text-purple-400 mb-4">⚙️ Indicator Mastery</h4>
+              <div class="space-y-4">
+                <div class="walkthrough-step">
+                  <h5 class="font-semibold text-white mb-2">Moving Average Strategies</h5>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Master 20/50 MA crossover signals</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Practice dynamic support/resistance</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="walkthrough-step">
+                  <h5 class="font-semibold text-white mb-2">Oscillator Signals</h5>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Identify RSI divergences on 5 charts</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Master MACD signal line crossovers</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 3: Strategy Development -->
+        <div id="trainingModule3" class="training-module hidden">
+          <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg p-6 mb-6">
+            <h3 class="text-2xl font-bold text-white mb-2">🎯 Module 3: Strategy Development</h3>
+            <p class="text-purple-100">Create and backtest your trading strategies</p>
+          </div>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-slate-700 rounded-lg p-6">
+              <h4 class="text-xl font-semibold text-yellow-400 mb-4">🔍 Strategy Building</h4>
+              <div class="space-y-4">
+                <div class="walkthrough-step">
+                  <h5 class="font-semibold text-white mb-2">Entry Rules Definition</h5>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Define 3 clear entry criteria</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Set stop-loss placement rules</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Establish take-profit targets (1:2 risk-reward)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-slate-700 rounded-lg p-6">
+              <h4 class="text-xl font-semibold text-blue-400 mb-4">📊 Backtesting Process</h4>
+              <div class="space-y-4">
+                <div class="walkthrough-step">
+                  <h5 class="font-semibold text-white mb-2">Historical Testing</h5>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Test strategy on 100 historical trades</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Calculate win rate and average R-multiple</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="form-checkbox text-blue-600"> 
+                      <span class="text-sm">Optimize entry/exit parameters</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional modules 4-7 continue with similar structure... -->
+        <div id="trainingModule4" class="training-module hidden">
+          <div class="bg-gradient-to-r from-red-600 to-orange-600 rounded-lg p-6 mb-6">
+            <h3 class="text-2xl font-bold text-white mb-2">⚖️ Module 4: Risk Management</h3>
+            <p class="text-red-100">Master position sizing and portfolio protection</p>
+          </div>
+          <div class="bg-slate-700 rounded-lg p-6">
+            <h4 class="text-xl font-semibold text-yellow-400 mb-4">💰 Position Sizing & Risk Control</h4>
+            <p class="text-slate-300 mb-4">Learn to calculate optimal position sizes and manage portfolio risk effectively.</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Calculate 1% risk per trade formula</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Set maximum 10% monthly drawdown limit</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Diversify across 3+ uncorrelated markets</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="trainingModule5" class="training-module hidden">
+          <div class="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-lg p-6 mb-6">
+            <h3 class="text-2xl font-bold text-white mb-2">🏆 Module 5: Advanced Strategies</h3>
+            <p class="text-indigo-100">Professional trading techniques and optimization</p>
+          </div>
+          <div class="bg-slate-700 rounded-lg p-6">
+            <h4 class="text-xl font-semibold text-yellow-400 mb-4">🎯 Advanced Techniques</h4>
+            <p class="text-slate-300 mb-4">Master multi-timeframe analysis and advanced trading concepts.</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Use daily for trend, 4H for entry timing</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Master correlation trading strategies</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Implement news-based trading filters</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="trainingModule6" class="training-module hidden">
+          <div class="bg-gradient-to-r from-pink-600 to-rose-600 rounded-lg p-6 mb-6">
+            <h3 class="text-2xl font-bold text-white mb-2">🧠 Module 6: Market Psychology</h3>
+            <p class="text-pink-100">Master sentiment analysis and crowd psychology</p>
+          </div>
+          <div class="bg-slate-700 rounded-lg p-6">
+            <h4 class="text-xl font-semibold text-yellow-400 mb-4">📊 Sentiment Analysis</h4>
+            <p class="text-slate-300 mb-4">Learn to read market emotions and profit from crowd behavior.</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Monitor VIX levels for market fear analysis</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Track COT (Commitment of Traders) reports</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Use social sentiment as contrarian indicator</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="trainingModule7" class="training-module hidden">
+          <div class="bg-gradient-to-r from-yellow-600 to-amber-600 rounded-lg p-6 mb-6">
+            <h3 class="text-2xl font-bold text-white mb-2">₿ Module 7: Cryptocurrency & DeFi</h3>
+            <p class="text-yellow-100">Master digital assets and decentralized finance</p>
+          </div>
+          <div class="bg-slate-700 rounded-lg p-6">
+            <h4 class="text-xl font-semibold text-yellow-400 mb-4">₿ Crypto Fundamentals</h4>
+            <p class="text-slate-300 mb-4">Understand blockchain technology and crypto trading strategies.</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Learn on-chain metrics (MVRV, active addresses)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Master Bitcoin dominance analysis</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="form-checkbox text-blue-600"> 
+                <span class="text-sm">Understand DeFi yield farming strategies</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === ONBOARDING SECTION === -->
+    <section id="onboardingContent" class="hidden fade-in" role="main" aria-labelledby="onboardingHeading">
+      <div class="card mb-8">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="text-4xl">🚀</div>
+          <div>
+            <h2 id="onboardingHeading" class="text-3xl font-bold text-white">Onboarding Checklist</h2>
+            <p class="text-lg text-blue-400">Complete these steps to start your trading journey</p>
+          </div>
+        </div>
+
+        <!-- Progress Overview -->
+        <div class="bg-slate-700 rounded-lg p-4 mb-6">
+          <h3 class="text-xl font-semibold mb-3 text-white">Onboarding Progress</h3>
+          <div class="progress-bar mb-2">
+            <div id="onboardingProgress" class="progress-fill" style="width: 0%"></div>
+          </div>
+          <p id="onboardingProgressText" class="text-sm text-blue-400">0 of 8 steps completed</p>
+        </div>
+
+        <!-- Onboarding Steps -->
+        <div class="space-y-4">
+          <!-- Step 1 -->
+          <div class="bg-slate-700 rounded-lg p-4" data-step="1">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                  1
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white">Create Your Trading Account</h4>
+                  <p class="text-sm text-blue-400">Set up your brokerage account and verify identity</p>
+                </div>
+              </div>
+              <button id="toggleStep1" class="toggle-btn" onclick="toggleStepCompletion(1)">Complete</button>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary btn-sm" onclick="completeStep(1)">Complete Phase</button>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-slate-700 rounded-lg p-4" data-step="2">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center text-white font-bold">
+                  2
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white">Download Trading Platform</h4>
+                  <p class="text-sm text-blue-400">Install and configure your trading software</p>
+                </div>
+              </div>
+              <button id="toggleStep2" class="toggle-btn" onclick="toggleStepCompletion(2)">Complete</button>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary btn-sm" onclick="completeStep(2)" disabled>Complete Phase</button>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-slate-700 rounded-lg p-4" data-step="3">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center text-white font-bold">
+                  3
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white">Fund Your Account</h4>
+                  <p class="text-sm text-blue-400">Make your initial deposit to start trading</p>
+                </div>
+              </div>
+              <button id="toggleStep3" class="toggle-btn" onclick="toggleStepCompletion(3)">Complete</button>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary btn-sm" onclick="completeStep(3)" disabled>Complete Phase</button>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="bg-slate-700 rounded-lg p-4" data-step="4">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center text-white font-bold">
+                  4
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white">Complete Phase 1 Training</h4>
+                  <p class="text-sm text-blue-400">Finish the Foundation & Mindset phase</p>
+                </div>
+              </div>
+              <button id="toggleStep4" class="toggle-btn" onclick="toggleStepCompletion(4)">Complete</button>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary btn-sm" onclick="completeStep(4)" disabled>Complete Phase</button>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="bg-slate-700 rounded-lg p-4" data-step="5">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center text-white font-bold">
+                  5
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white">Take the Knowledge Quiz</h4>
+                  <p class="text-sm text-blue-400">Test your understanding of trading concepts</p>
+                </div>
+              </div>
+              <button id="toggleStep5" class="toggle-btn" onclick="toggleStepCompletion(5)">Complete</button>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary btn-sm" onclick="completeStep(5)" disabled>Complete Phase</button>
+            </div>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="bg-slate-700 rounded-lg p-4" data-step="6">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center text-white font-bold">
+                  6
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white">Make Your First Paper Trade</h4>
+                  <p class="text-sm text-blue-400">Practice with demo account first</p>
+                </div>
+              </div>
+              <button id="toggleStep6" class="toggle-btn" onclick="toggleStepCompletion(6)">Complete</button>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary btn-sm" onclick="completeStep(6)" disabled>Complete Phase</button>
+            </div>
+          </div>
+
+          <!-- Step 7 -->
+          <div class="bg-slate-700 rounded-lg p-4" data-step="7">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center text-white font-bold">
+                  7
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white">Log Your First Real Trade</h4>
+                  <p class="text-sm text-blue-400">Record your first live trade in the journal</p>
+                </div>
+              </div>
+              <button id="toggleStep7" class="toggle-btn" onclick="toggleStepCompletion(7)">Complete</button>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary btn-sm" onclick="completeStep(7)" disabled>Complete Phase</button>
+            </div>
+          </div>
+
+          <!-- Step 8 -->
+          <div class="bg-slate-700 rounded-lg p-4" data-step="8">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center text-white font-bold">
+                  8
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white">Set Up Performance Tracking</h4>
+                  <p class="text-sm text-blue-400">Configure your dashboard and analytics</p>
+                </div>
+              </div>
+              <button id="toggleStep8" class="toggle-btn" onclick="toggleStepCompletion(8)">Complete</button>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary btn-sm" onclick="completeStep(8)" disabled>Complete Phase</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Completion Celebration -->
+        <div id="completionCelebration" class="hidden mt-8 text-center">
+          <div class="confetti-container" id="confettiContainer">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+          </div>
+          <div class="animate-bounce text-8xl mb-4 trophy-animation">🏆</div>
+          <h3 class="text-3xl font-bold text-yellow-400 mb-4 animate-pulse">🎉 CONGRATULATIONS! 🎉</h3>
+          <p class="text-xl text-white mb-6">You've completed your trading onboarding. You're ready to begin your journey to trading mastery!</p>
+          <button id="beginJourneyBtn" class="bg-gradient-to-r from-yellow-500 via-yellow-400 to-orange-500 text-slate-900 px-8 py-4 rounded-full text-xl font-extrabold tracking-wide shadow-lg border-2 border-yellow-400 hover:from-yellow-400 hover:to-orange-400 transition-all duration-300 transform hover:scale-105">
+            🚀 Begin Your Journey to Trading Mastery! 🚀
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- === QUIZ MODAL === -->
+  <div id="quizModal" class="modal hidden" role="dialog" aria-labelledby="quizModalTitle" aria-modal="true">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <h2 id="quizModalTitle" class="text-2xl font-bold text-white">Trading Knowledge Quiz</h2>
+        <button id="closeQuiz" class="btn btn-danger" aria-label="Close quiz">✕</button>
+      </div>
+
+      <!-- Quiz Progress -->
+      <div class="mb-6">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm text-blue-400">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></span>
+          <span class="text-sm text-blue-400">Score: <span id="currentScore">0</span>/<span id="maxScore">10</span></span>
+        </div>
+        <div class="progress-bar">
+          <div id="quizProgress" class="progress-fill" style="width: 10%"></div>
+        </div>
+      </div>
+
+      <!-- Question Container -->
+      <div id="questionContainer" class="quiz-question">
+        <h3 id="questionText" class="text-lg font-semibold text-white mb-4"></h3>
+        <div id="optionsContainer" class="space-y-2">
+          <!-- Options will be populated here -->
+        </div>
+      </div>
+
+      <!-- Feedback Container -->
+      <div id="feedbackContainer" class="hidden mt-4 p-4 rounded-lg">
+        <p id="feedbackText" class="font-semibold mb-2"></p>
+        <p id="explanationText" class="text-sm"></p>
+      </div>
+
+      <!-- Quiz Controls -->
+      <div class="flex justify-between items-center mt-6">
+        <button id="prevQuestion" class="btn btn-primary" disabled>Previous</button>
+        <button id="submitAnswer" class="btn btn-success" disabled>Submit Answer</button>
+        <button id="nextQuestion" class="btn btn-primary hidden">Next Question</button>
+        <button id="finishQuiz" class="btn btn-success hidden">Finish Quiz</button>
+      </div>
+
+      <!-- Quiz Results -->
+      <div id="quizResults" class="hidden mt-6 text-center">
+        <div id="resultsIcon" class="text-6xl mb-4"></div>
+        <h3 id="resultsTitle" class="text-2xl font-bold mb-2"></h3>
+        <p id="resultsScore" class="text-lg mb-4"></p>
+        <p id="resultsMessage" class="text-blue-400 mb-6"></p>
+        <button id="retakeQuiz" class="btn btn-primary mr-4">Retake Quiz</button>
+        <button id="closeQuizResults" class="btn btn-success">Continue Learning</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- === JAVASCRIPT === -->
+  <script>
+    // =============================================================================
+    // GLOBAL STATE MANAGEMENT
+    // =============================================================================
+    
+    let appState = {
+      currentTab: 'syllabus',
+      phases: {
+        completed: JSON.parse(localStorage.getItem('completedPhases') || '[]'),
+        current: 1
+      },
+      onboarding: {
+        completed: JSON.parse(localStorage.getItem('onboardingSteps') || '[]'),
+        total: 8
+      },
+      journal: {
+        trades: JSON.parse(localStorage.getItem('tradingJournal') || '[]')
+      },
+      quiz: {
+        questions: [
+          {
+            question: "What is the most important rule in trading?",
+            options: [
+              "Making as much money as possible",
+              "Never lose money",
+              "Risk management and capital preservation",
+              "Always follow other traders"
+            ],
+            correct: 2,
+            explanation: "Risk management is fundamental to long-term trading success. Without proper risk management, even profitable strategies can lead to account blow-ups."
+          },
+          {
+            question: "What percentage of your account should you risk per trade?",
+            options: [
+              "10-20%",
+              "5-10%", 
+              "1-3%",
+              "As much as possible"
+            ],
+            correct: 2,
+            explanation: "Most professional traders risk 1-3% of their account per trade. This allows for many losing trades while preserving capital for winning trades."
+          },
+          {
+            question: "What is a stop-loss order?",
+            options: [
+              "An order to buy more shares",
+              "An order to automatically close a losing position",
+              "An order to take profits",
+              "An order to cancel other orders"
+            ],
+            correct: 1,
+            explanation: "A stop-loss order automatically closes your position when the price moves against you by a predetermined amount, limiting your losses."
+          },
+          {
+            question: "What does RSI measure?",
+            options: [
+              "Volume",
+              "Price momentum and overbought/oversold conditions",
+              "Moving averages",
+              "Market volatility"
+            ],
+            correct: 1,
+            explanation: "RSI (Relative Strength Index) measures price momentum and helps identify overbought (>70) and oversold (<30) conditions."
+          },
+          {
+            question: "What is the most important emotional trait for traders?",
+            options: [
+              "Greed",
+              "Fear",
+              "Discipline",
+              "Excitement"
+            ],
+            correct: 2,
+            explanation: "Discipline is crucial for following your trading plan, managing risk, and avoiding emotional decision-making that can destroy accounts."
+          },
+          {
+            question: "What is diversification in trading?",
+            options: [
+              "Putting all money in one trade",
+              "Spreading risk across different assets or strategies",
+              "Only trading one market",
+              "Following one trading guru"
+            ],
+            correct: 1,
+            explanation: "Diversification means spreading your risk across different assets, markets, or strategies to reduce overall portfolio risk."
+          },
+          {
+            question: "What is the purpose of backtesting?",
+            options: [
+              "To predict future prices",
+              "To test strategy performance on historical data",
+              "To find the best trades",
+              "To eliminate all risk"
+            ],
+            correct: 1,
+            explanation: "Backtesting helps evaluate how a trading strategy would have performed using historical data, though past performance doesn't guarantee future results."
+          },
+          {
+            question: "What is slippage in trading?",
+            options: [
+              "The profit from a trade",
+              "The difference between expected and actual execution price",
+              "The trading fee",
+              "The stop-loss level"
+            ],
+            correct: 1,
+            explanation: "Slippage is the difference between the expected price of a trade and the actual executed price, often occurring in fast-moving markets."
+          },
+          {
+            question: "What is the risk-reward ratio?",
+            options: [
+              "How much you can lose vs. how much you can gain",
+              "The number of trades you make",
+              "The size of your account",
+              "The market volatility"
+            ],
+            correct: 0,
+            explanation: "Risk-reward ratio compares potential loss (risk) to potential profit (reward). A 1:2 ratio means risking $1 to potentially gain $2."
+          },
+          {
+            question: "What should you do after a series of losing trades?",
+            options: [
+              "Increase position size to recover losses",
+              "Stop trading and review your strategy",
+              "Switch to a completely different strategy",
+              "Trade more frequently"
+            ],
+            correct: 1,
+            explanation: "After losing streaks, it's best to pause, review your trades, analyze what went wrong, and ensure you're following your trading plan before continuing."
+          }
+        ],
+        currentQuestion: 0,
+        selectedAnswers: [],
+        score: 0
+      }
+    };
+
+    // =============================================================================
+    // UTILITY FUNCTIONS
+    // =============================================================================
+    
+    function saveState() {
+      localStorage.setItem('completedPhases', JSON.stringify(appState.phases.completed));
+      localStorage.setItem('onboardingSteps', JSON.stringify(appState.onboarding.completed));
+      localStorage.setItem('tradingJournal', JSON.stringify(appState.journal.trades));
+    }
+
+    function showTab(tabName) {
+      // Hide all sections
+      const sections = ['onboardingContent', 'syllabusContent', 'trainingContent', 'journalContent', 'dashboardContent'];
+      sections.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.classList.add('hidden');
+      });
+
+      // Remove active class from all tabs
+      const tabs = ['onboardingTab', 'syllabusTab', 'trainingTab', 'journalTab', 'dashboardTab'];
+      tabs.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.classList.remove('active');
+      });
+
+      // Show selected section and activate tab
+      const contentId = tabName + 'Content';
+      const tabId = tabName + 'Tab';
+      
+      const content = document.getElementById(contentId);
+      const tab = document.getElementById(tabId);
+      
+      if (content) content.classList.remove('hidden');
+      if (tab) tab.classList.add('active');
+
+      appState.currentTab = tabName;
+
+      // Update content based on current tab
+      if (tabName === 'journal') {
+        updateJournalTable();
+        updateJournalStats();
+      } else if (tabName === 'dashboard') {
+        updateDashboard();
+      }
+    }
+
+    // =============================================================================
+    // SYLLABUS FUNCTIONALITY
+    // =============================================================================
+    
+    function togglePhase(phaseNumber) {
+      const content = document.getElementById(`phase${phaseNumber}Content`);
+      const arrow = document.getElementById(`phase${phaseNumber}Arrow`);
+      const header = content.parentElement.querySelector('.phase-header');
+      
+      const isExpanded = content.classList.contains('expanded');
+      
+      // Close all other phases
+      for (let i = 1; i <= 5; i++) {
+        if (i !== phaseNumber) {
+          const otherContent = document.getElementById(`phase${i}Content`);
+          const otherArrow = document.getElementById(`phase${i}Arrow`);
+          if (otherContent && otherArrow) {
+            otherContent.classList.remove('expanded');
+            otherArrow.style.transform = 'rotate(0deg)';
+            otherContent.parentElement.querySelector('.phase-header').setAttribute('aria-expanded', 'false');
+          }
+        }
+      }
+      
+      // Toggle current phase
+      if (isExpanded) {
+        content.classList.remove('expanded');
+        arrow.style.transform = 'rotate(0deg)';
+        header.setAttribute('aria-expanded', 'false');
+      } else {
+        content.classList.add('expanded');
+        arrow.style.transform = 'rotate(90deg)';
+        header.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    function completePhase(phaseNumber) {
+      if (!appState.phases.completed.includes(phaseNumber)) {
+        appState.phases.completed.push(phaseNumber);
+        saveState();
+        updatePhaseStatus(phaseNumber);
+        updateSyllabusProgress();
+        
+        // Unlock next phase
+        if (phaseNumber < 5) {
+          unlockPhase(phaseNumber + 1);
+        }
+        
+        // Show completion message
+        showNotification(`🎉 Phase ${phaseNumber} completed! Well done!`, 'success');
+      }
+    }
+
+    function updatePhaseStatus(phaseNumber) {
+      const statusElement = document.getElementById(`phase${phaseNumber}Status`);
+      const buttonElement = document.querySelector(`[onclick="completePhase(${phaseNumber})"]`);
+      
+      if (statusElement && buttonElement) {
+        if (appState.phases.completed.includes(phaseNumber)) {
+          statusElement.textContent = '✅ Completed';
+          statusElement.className = 'bg-green-600 text-white px-3 py-1 rounded-full text-sm';
+          buttonElement.textContent = '✓ Completed';
+          buttonElement.disabled = true;
+          buttonElement.classList.add('opacity-50');
+        }
+      }
+    }
+
+    function unlockPhase(phaseNumber) {
+      const statusElement = document.getElementById(`phase${phaseNumber}Status`);
+      const buttonElement = document.querySelector(`[onclick="completePhase(${phaseNumber})"]`);
+      
+      if (statusElement && buttonElement && phaseNumber <= 7) {
+        statusElement.textContent = '🔓 Unlocked';
+        statusElement.className = 'bg-blue-600 text-white px-3 py-1 rounded-full text-sm';
+        buttonElement.disabled = false;
+        buttonElement.classList.remove('opacity-50');
+      }
+    }
+
+    function togglePhaseCompletion(phaseNumber) {
+      const checkbox = document.getElementById(`phase${phaseNumber}Toggle`);
+      const button = document.querySelector(`[onclick="completePhase(${phaseNumber})"]`);
+      
+      if (checkbox && button) {
+        if (checkbox.checked) {
+          // Mark as completed
+          if (!appState.phases.completed.includes(phaseNumber)) {
+            appState.phases.completed.push(phaseNumber);
+            button.disabled = false;
+            button.classList.remove('opacity-50');
+            updatePhaseStatus(phaseNumber);
+            saveState();
+            updateSyllabusProgress();
+            showNotification(`Phase ${phaseNumber} marked for completion!`, 'success');
+          }
+        } else {
+          // Unmark completion
+          const index = appState.phases.completed.indexOf(phaseNumber);
+          if (index > -1) {
+            appState.phases.completed.splice(index, 1);
+            button.disabled = true;
+            button.classList.add('opacity-50');
+            updatePhaseStatus(phaseNumber);
+            saveState();
+            updateSyllabusProgress();
+            showNotification(`Phase ${phaseNumber} unmarked!`, 'info');
+          }
+        }
+      }
+    }
+
+    function updateSyllabusProgress() {
+      const completed = appState.phases.completed.length;
+      const total = 7;
+      const percentage = (completed / total) * 100;
+      
+      const progressBar = document.getElementById('overallProgress');
+      const progressText = document.getElementById('progressText');
+      
+      if (progressBar) progressBar.style.width = percentage + '%';
+      if (progressText) progressText.textContent = `${Math.round(percentage)}% Complete (${completed}/${total} phases)`;
+    }
+
+    // =============================================================================
+    // JOURNAL FUNCTIONALITY
+    // =============================================================================
+    
+    function initializeJournal() {
+      const form = document.getElementById('journalForm');
+      if (form) {
+        form.addEventListener('submit', handleJournalSubmit);
+      }
+
+      // Set default date to today
+      const dateInput = document.getElementById('tradeDate');
+      if (dateInput) {
+        dateInput.value = new Date().toISOString().split('T')[0];
+      }
+
+      updateJournalTable();
+      updateJournalStats();
+    }
+
+    function handleJournalSubmit(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const trade = {
+        id: Date.now(),
+        date: formData.get('tradeDate') || document.getElementById('tradeDate').value,
+        symbol: formData.get('symbol') || document.getElementById('symbol').value,
+        direction: formData.get('direction') || document.getElementById('direction').value,
+        quantity: parseFloat(formData.get('quantity') || document.getElementById('quantity').value),
+        entryPrice: parseFloat(formData.get('entryPrice') || document.getElementById('entryPrice').value),
+        exitPrice: parseFloat(formData.get('exitPrice') || document.getElementById('exitPrice').value) || null,
+        stopLoss: parseFloat(formData.get('stopLoss') || document.getElementById('stopLoss').value) || null,
+        takeProfit: parseFloat(formData.get('takeProfit') || document.getElementById('takeProfit').value) || null,
+        strategy: formData.get('strategy') || document.getElementById('strategy').value,
+        notes: formData.get('notes') || document.getElementById('notes').value
+      };
+
+      // Calculate P&L if exit price is provided
+      if (trade.exitPrice) {
+        if (trade.direction === 'Long') {
+          trade.pnl = (trade.exitPrice - trade.entryPrice) * trade.quantity;
+        } else {
+          trade.pnl = (trade.entryPrice - trade.exitPrice) * trade.quantity;
+        }
+      }
+
+      appState.journal.trades.push(trade);
+      saveState();
+      
+      // Reset form
+      e.target.reset();
+      document.getElementById('tradeDate').value = new Date().toISOString().split('T')[0];
+      
+      updateJournalTable();
+      updateJournalStats();
+      
+      showNotification('Trade added to journal successfully!', 'success');
+    }
+
+    function updateJournalTable() {
+      const tbody = document.getElementById('tradesTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+
+      appState.journal.trades.forEach((trade, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${trade.date}</td>
+          <td>${trade.symbol}</td>
+          <td><span class="px-2 py-1 rounded text-xs font-semibold ${trade.direction === 'Long' ? 'bg-green-600' : 'bg-red-600'} text-white">${trade.direction}</span></td>
+          <td>${trade.quantity}</td>
+          <td>$${trade.entryPrice.toFixed(2)}</td>
+          <td>${trade.exitPrice ? '$' + trade.exitPrice.toFixed(2) : 'Open'}</td>
+          <td class="${trade.pnl ? (trade.pnl >= 0 ? 'text-green-400' : 'text-red-400') : ''}">${trade.pnl ? '$' + trade.pnl.toFixed(2) : 'Open'}</td>
+          <td>${trade.strategy || 'N/A'}</td>
+          <td>
+            <button class="btn btn-danger text-xs" onclick="deleteTrade(${index})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function deleteTrade(index) {
+      if (confirm('Are you sure you want to delete this trade?')) {
+        appState.journal.trades.splice(index, 1);
+        saveState();
+        updateJournalTable();
+        updateJournalStats();
+        showNotification('Trade deleted successfully!', 'success');
+      }
+    }
+
+    function updateJournalStats() {
+      const trades = appState.journal.trades;
+      const completedTrades = trades.filter(t => t.pnl !== undefined);
+      
+      const totalTrades = completedTrades.length;
+      const winningTrades = completedTrades.filter(t => t.pnl > 0).length;
+      const winRate = totalTrades > 0 ? (winningTrades / totalTrades) * 100 : 0;
+      const totalPnL = completedTrades.reduce((sum, t) => sum + (t.pnl || 0), 0);
+
+      // Update journal summary
+      const journalTotalElement = document.getElementById('journalTotalTrades');
+      const journalWinRateElement = document.getElementById('journalWinRate');
+      const journalPnLElement = document.getElementById('journalPnL');
+
+      if (journalTotalElement) journalTotalElement.textContent = totalTrades;
+      if (journalWinRateElement) journalWinRateElement.textContent = winRate.toFixed(1) + '%';
+      if (journalPnLElement) {
+        journalPnLElement.textContent = '$' + totalPnL.toFixed(2);
+        journalPnLElement.className = `text-2xl font-bold ${totalPnL >= 0 ? 'text-green-400' : 'text-red-400'}`;
+      }
+    }
+
+    // =============================================================================
+    // ENHANCED JOURNAL FEATURES
+    // =============================================================================
+    
+    function exportTradesCSV() {
+      const trades = appState.journal.trades;
+      if (trades.length === 0) {
+        showNotification('No trades to export!', 'info');
+        return;
+      }
+
+      // Create CSV content
+      const headers = ['Date', 'Symbol', 'Direction', 'Quantity', 'Entry Price', 'Exit Price', 'Stop Loss', 'Take Profit', 'P&L', 'Strategy', 'Notes'];
+      const csvContent = [
+        headers.join(','),
+        ...trades.map(trade => [
+          trade.date,
+          trade.symbol,
+          trade.direction,
+          trade.quantity,
+          trade.entryPrice,
+          trade.exitPrice || '',
+          trade.stopLoss || '',
+          trade.takeProfit || '',
+          trade.pnl || '',
+          trade.strategy || '',
+          `"${(trade.notes || '').replace(/"/g, '""')}"`
+        ].join(','))
+      ].join('\n');
+
+      // Create and download file
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `trading_journal_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showNotification('Trading journal exported successfully!', 'success');
+      }
+    }
+
+    function clearAllTrades() {
+      if (appState.journal.trades.length === 0) {
+        showNotification('No trades to clear!', 'info');
+        return;
+      }
+
+      if (confirm('Are you sure you want to delete ALL trades? This action cannot be undone!')) {
+        appState.journal.trades = [];
+        saveState();
+        updateJournalTable();
+        updateJournalStats();
+        showNotification('All trades cleared successfully!', 'success');
+      }
+    }
+
+    function openEditMode() {
+      const trades = appState.journal.trades;
+      if (trades.length === 0) {
+        showNotification('No trades to edit!', 'info');
+        return;
+      }
+
+      // Toggle edit mode
+      const table = document.getElementById('tradesTable');
+      const isEditMode = table.classList.contains('edit-mode');
+      
+      if (isEditMode) {
+        // Exit edit mode
+        table.classList.remove('edit-mode');
+        updateJournalTable();
+        showNotification('Edit mode disabled', 'info');
+      } else {
+        // Enter edit mode
+        table.classList.add('edit-mode');
+        makeTableEditable();
+        showNotification('Edit mode enabled - click on any cell to edit', 'info');
+      }
+    }
+
+    function makeTableEditable() {
+      const tableBody = document.getElementById('tradesTableBody');
+      const rows = tableBody.querySelectorAll('tr');
+      
+      rows.forEach((row, tradeIndex) => {
+        const cells = row.querySelectorAll('td');
+        
+        // Make specific cells editable (skip Actions column)
+        for (let i = 0; i < cells.length - 1; i++) {
+          const cell = cells[i];
+          const originalContent = cell.textContent;
+          
+          cell.style.cursor = 'pointer';
+          cell.style.backgroundColor = '#334155';
+          
+          cell.onclick = function() {
+            if (cell.querySelector('input')) return; // Already editing
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = originalContent;
+            input.className = 'w-full bg-slate-600 text-white p-1 rounded';
+            
+            input.onblur = function() {
+              const newValue = input.value;
+              cell.textContent = newValue;
+              cell.onclick = arguments.callee; // Restore click handler
+              
+              // Update the trade data
+              updateTradeData(tradeIndex, i, newValue);
+            };
+            
+            input.onkeydown = function(e) {
+              if (e.key === 'Enter') {
+                input.blur();
+              }
+            };
+            
+            cell.textContent = '';
+            cell.appendChild(input);
+            input.focus();
+          };
+        }
+      });
+    }
+
+    function updateTradeData(tradeIndex, cellIndex, newValue) {
+      const trade = appState.journal.trades[tradeIndex];
+      const fields = ['date', 'symbol', 'direction', 'quantity', 'entryPrice', 'exitPrice', 'pnl', 'strategy'];
+      
+      if (cellIndex < fields.length) {
+        const fieldName = fields[cellIndex];
+        
+        // Convert numeric fields
+        if (['quantity', 'entryPrice', 'exitPrice', 'pnl'].includes(fieldName)) {
+          trade[fieldName] = parseFloat(newValue) || undefined;
+        } else {
+          trade[fieldName] = newValue;
+        }
+        
+        // Recalculate P&L if entry/exit prices changed
+        if (['quantity', 'entryPrice', 'exitPrice'].includes(fieldName) && trade.entryPrice && trade.exitPrice && trade.quantity) {
+          const multiplier = trade.direction === 'Long' ? 1 : -1;
+          trade.pnl = (trade.exitPrice - trade.entryPrice) * trade.quantity * multiplier;
+        }
+        
+        saveState();
+        updateJournalStats();
+        showNotification('Trade updated successfully!', 'success');
+      }
+    }
+
+    // =============================================================================
+    // TRADING DASHBOARD FUNCTIONALITY
+    // =============================================================================
+
+    let winLossChart = null;
+    let cumulativePLChart = null;
+
+    function updateDashboard() {
+      updateDashboardMetrics();
+      updateDashboardTable();
+      updateDashboardCharts();
+    }
+
+    function updateDashboardMetrics() {
+      const trades = appState.journal.trades;
+      const totalEntries = trades.length;
+      
+      // Calculate win rate
+      const wins = trades.filter(trade => parseFloat(trade.pnl) > 0).length;
+      const winRate = totalEntries > 0 ? (wins / totalEntries * 100).toFixed(1) : 0;
+      
+      // Calculate total P&L
+      const totalPL = trades.reduce((sum, trade) => sum + parseFloat(trade.pnl || 0), 0);
+      
+      // Calculate average P&L
+      const avgPL = totalEntries > 0 ? (totalPL / totalEntries) : 0;
+
+      // Update dashboard elements
+      document.getElementById('dashTotalEntries').textContent = totalEntries;
+      document.getElementById('dashWinRate').textContent = winRate + '%';
+      
+      const totalPLElement = document.getElementById('dashTotalPL');
+      totalPLElement.textContent = '$' + totalPL.toFixed(2);
+      totalPLElement.className = totalPL >= 0 ? 'text-3xl font-bold text-green-400' : 'text-3xl font-bold text-red-400';
+      
+      const avgPLElement = document.getElementById('dashAvgPL');
+      avgPLElement.textContent = '$' + avgPL.toFixed(2);
+      avgPLElement.className = avgPL >= 0 ? 'text-3xl font-bold text-green-400' : 'text-3xl font-bold text-red-400';
+    }
+
+    function updateDashboardTable() {
+      const trades = appState.journal.trades;
+      const tbody = document.getElementById('dashboardTradesTable');
+      
+      if (trades.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-8 text-slate-400">No trades recorded yet</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = trades.map(trade => `
+        <tr class="border-b border-slate-600 hover:bg-slate-600/50">
+          <td class="py-2 px-3">${trade.date}</td>
+          <td class="py-2 px-3 font-semibold">${trade.symbol}</td>
+          <td class="py-2 px-3">
+            <span class="px-2 py-1 rounded text-xs ${trade.direction === 'Long' ? 'bg-green-600' : 'bg-red-600'} text-white">
+              ${trade.direction}
+            </span>
+          </td>
+          <td class="py-2 px-3 text-right">$${parseFloat(trade.entryPrice || 0).toFixed(2)}</td>
+          <td class="py-2 px-3 text-right">$${parseFloat(trade.exitPrice || 0).toFixed(2)}</td>
+          <td class="py-2 px-3 text-right ${parseFloat(trade.pnl) >= 0 ? 'text-green-400' : 'text-red-400'} font-semibold">
+            $${parseFloat(trade.pnl || 0).toFixed(2)}
+          </td>
+          <td class="py-2 px-3">
+            <span class="px-2 py-1 rounded text-xs ${parseFloat(trade.pnl) >= 0 ? 'bg-green-600' : 'bg-red-600'} text-white">
+              ${parseFloat(trade.pnl) >= 0 ? 'Win' : 'Loss'}
+            </span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function updateDashboardCharts() {
+      updateWinLossChart();
+      updateCumulativePLChart();
+    }
+
+    function updateWinLossChart() {
+      const trades = appState.journal.trades;
+      const ctx = document.getElementById('winLossChart');
+      
+      if (!ctx) return;
+
+      // Check if Chart.js is available
+      if (typeof Chart === 'undefined') {
+        ctx.parentElement.innerHTML = '<div class="flex items-center justify-center h-64 text-slate-400"><div class="text-center"><div class="text-4xl mb-2">📊</div><div>Chart.js not available</div><div class="text-sm">Charts will display when Chart.js loads</div></div></div>';
+        return;
+      }
+
+      // Destroy existing chart
+      if (winLossChart) {
+        winLossChart.destroy();
+      }
+
+      const wins = trades.filter(trade => parseFloat(trade.pnl) > 0).length;
+      const losses = trades.filter(trade => parseFloat(trade.pnl) < 0).length;
+      const breakevens = trades.filter(trade => parseFloat(trade.pnl) === 0).length;
+
+      winLossChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Wins', 'Losses', 'Breakeven'],
+          datasets: [{
+            label: 'Number of Trades',
+            data: [wins, losses, breakevens],
+            backgroundColor: [
+              'rgba(34, 197, 94, 0.8)',   // Green for wins
+              'rgba(239, 68, 68, 0.8)',   // Red for losses
+              'rgba(156, 163, 175, 0.8)'  // Gray for breakevens
+            ],
+            borderColor: [
+              'rgba(34, 197, 94, 1)',
+              'rgba(239, 68, 68, 1)',
+              'rgba(156, 163, 175, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1,
+                color: '#94a3b8'
+              },
+              grid: {
+                color: 'rgba(148, 163, 184, 0.1)'
+              }
+            },
+            x: {
+              ticks: {
+                color: '#94a3b8'
+              },
+              grid: {
+                color: 'rgba(148, 163, 184, 0.1)'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function updateCumulativePLChart() {
+      const trades = appState.journal.trades;
+      const ctx = document.getElementById('cumulativePLChart');
+      
+      if (!ctx) return;
+
+      // Check if Chart.js is available
+      if (typeof Chart === 'undefined') {
+        ctx.parentElement.innerHTML = '<div class="flex items-center justify-center h-64 text-slate-400"><div class="text-center"><div class="text-4xl mb-2">📈</div><div>Chart.js not available</div><div class="text-sm">Charts will display when Chart.js loads</div></div></div>';
+        return;
+      }
+
+      // Destroy existing chart
+      if (cumulativePLChart) {
+        cumulativePLChart.destroy();
+      }
+
+      // Calculate cumulative P&L
+      let cumulativePL = 0;
+      const cumulativeData = trades.map((trade, index) => {
+        cumulativePL += parseFloat(trade.pnl || 0);
+        return {
+          x: index + 1,
+          y: cumulativePL
+        };
+      });
+
+      // Add starting point
+      cumulativeData.unshift({ x: 0, y: 0 });
+
+      cumulativePLChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: 'Cumulative P&L',
+            data: cumulativeData,
+            borderColor: 'rgba(59, 130, 246, 1)',
+            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            fill: true,
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              ticks: {
+                color: '#94a3b8',
+                callback: function(value) {
+                  return '$' + value.toFixed(2);
+                }
+              },
+              grid: {
+                color: 'rgba(148, 163, 184, 0.1)'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Trade Number',
+                color: '#94a3b8'
+              },
+              ticks: {
+                color: '#94a3b8',
+                stepSize: 1
+              },
+              grid: {
+                color: 'rgba(148, 163, 184, 0.1)'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // =============================================================================
+    // DASHBOARD FUNCTIONALITY
+    // =============================================================================
+    
+    function completeStep(stepNumber) {
+      if (!appState.onboarding.completed.includes(stepNumber)) {
+        appState.onboarding.completed.push(stepNumber);
+        saveState();
+        updateOnboardingStep(stepNumber);
+        updateOnboardingProgress();
+        
+        // Unlock next step
+        if (stepNumber < appState.onboarding.total) {
+          unlockOnboardingStep(stepNumber + 1);
+        }
+        
+        showNotification(`Step ${stepNumber} completed!`, 'success');
+        
+        if (appState.onboarding.completed.length === appState.onboarding.total) {
+          showCompletionCelebration();
+        }
+      }
+    }
+
+    function toggleStepCompletion(stepNumber) {
+      const toggleBtn = document.getElementById(`toggleStep${stepNumber}`);
+      const stepElement = document.querySelector(`[data-step="${stepNumber}"]`);
+      const circle = stepElement.querySelector('.w-8.h-8');
+      const completePhaseBtn = stepElement.querySelector('.btn-primary');
+      
+      if (!toggleBtn || !stepElement) return;
+      
+      const isCompleted = appState.onboarding.completed.includes(stepNumber);
+      
+      if (isCompleted) {
+        // Mark as incomplete
+        const index = appState.onboarding.completed.indexOf(stepNumber);
+        if (index > -1) {
+          appState.onboarding.completed.splice(index, 1);
+        }
+        
+        toggleBtn.textContent = 'Complete';
+        toggleBtn.classList.remove('completed');
+        circle.classList.remove('bg-green-600');
+        circle.classList.add('bg-slate-600');
+        completePhaseBtn.textContent = 'Complete Phase';
+        completePhaseBtn.disabled = true;
+        completePhaseBtn.classList.add('opacity-50');
+        
+        showNotification(`Step ${stepNumber} marked as incomplete`, 'info');
+      } else {
+        // Mark as complete
+        appState.onboarding.completed.push(stepNumber);
+        
+        toggleBtn.textContent = 'Mark Incomplete';
+        toggleBtn.classList.add('completed');
+        circle.classList.remove('bg-slate-600');
+        circle.classList.add('bg-green-600');
+        completePhaseBtn.textContent = '✓ Completed';
+        completePhaseBtn.disabled = false;
+        completePhaseBtn.classList.remove('opacity-50');
+        
+        showNotification(`Step ${stepNumber} marked as complete!`, 'success');
+      }
+      
+      saveState();
+      updateOnboardingProgress();
+      
+      // Check if all steps are completed
+      if (appState.onboarding.completed.length === appState.onboarding.total) {
+        showCompletionCelebration();
+      } else {
+        // Hide celebration if not all steps are complete
+        const celebration = document.getElementById('completionCelebration');
+        if (celebration) celebration.classList.add('hidden');
+      }
+    }
+
+    function updateOnboardingStep(stepNumber) {
+      const stepElement = document.querySelector(`[data-step="${stepNumber}"]`);
+      if (!stepElement) return;
+
+      const circle = stepElement.querySelector('.w-8.h-8');
+      const toggleBtn = document.getElementById(`toggleStep${stepNumber}`);
+      const completePhaseBtn = stepElement.querySelector('.btn-primary');
+      
+      if (circle && toggleBtn && completePhaseBtn) {
+        circle.classList.remove('bg-slate-600');
+        circle.classList.add('bg-green-600');
+        toggleBtn.textContent = 'Mark Incomplete';
+        toggleBtn.classList.add('completed');
+        completePhaseBtn.textContent = '✓ Completed';
+        completePhaseBtn.disabled = false;
+        completePhaseBtn.classList.remove('opacity-50');
+      }
+    }
+
+    function unlockOnboardingStep(stepNumber) {
+      const stepElement = document.querySelector(`[data-step="${stepNumber}"]`);
+      if (!stepElement) return;
+
+      const circle = stepElement.querySelector('.w-8.h-8');
+      const toggleBtn = document.getElementById(`toggleStep${stepNumber}`);
+      
+      if (circle && toggleBtn) {
+        circle.classList.remove('bg-slate-600');
+        circle.classList.add('bg-blue-600');
+        toggleBtn.disabled = false;
+        toggleBtn.classList.remove('opacity-50');
+      }
+    }
+
+    function updateOnboardingProgress() {
+      const completed = appState.onboarding.completed.length;
+      const total = appState.onboarding.total;
+      const percentage = (completed / total) * 100;
+      
+      const progressBar = document.getElementById('onboardingProgress');
+      const progressText = document.getElementById('onboardingProgressText');
+      
+      if (progressBar) progressBar.style.width = percentage + '%';
+      if (progressText) progressText.textContent = `${completed} of ${total} steps completed`;
+    }
+
+    function showCompletionCelebration() {
+      const celebration = document.getElementById('completionCelebration');
+      if (celebration) {
+        celebration.classList.remove('hidden');
+        celebration.scrollIntoView({ behavior: 'smooth' });
+        
+        // Start confetti animation
+        const confettiContainer = document.getElementById('confettiContainer');
+        if (confettiContainer) {
+          confettiContainer.style.display = 'block';
+          // Hide confetti after 6 seconds
+          setTimeout(() => {
+            confettiContainer.style.display = 'none';
+          }, 6000);
+        }
+      }
+    }
+
+    // =============================================================================
+    // QUIZ FUNCTIONALITY
+    // =============================================================================
+    
+    function openQuiz() {
+      const modal = document.getElementById('quizModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        resetQuiz();
+        showQuestion();
+      }
+    }
+
+    function closeQuiz() {
+      const modal = document.getElementById('quizModal');
+      if (modal) {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function resetQuiz() {
+      appState.quiz.currentQuestion = 0;
+      appState.quiz.selectedAnswers = [];
+      appState.quiz.score = 0;
+      
+      document.getElementById('quizResults').classList.add('hidden');
+      document.getElementById('questionContainer').classList.remove('hidden');
+      document.getElementById('submitAnswer').classList.remove('hidden');
+      document.getElementById('nextQuestion').classList.add('hidden');
+      document.getElementById('finishQuiz').classList.add('hidden');
+      document.getElementById('feedbackContainer').classList.add('hidden');
+    }
+
+    function showQuestion() {
+      const quiz = appState.quiz;
+      const question = quiz.questions[quiz.currentQuestion];
+      
+      // Update progress
+      document.getElementById('currentQuestion').textContent = quiz.currentQuestion + 1;
+      document.getElementById('totalQuestions').textContent = quiz.questions.length;
+      document.getElementById('currentScore').textContent = quiz.score;
+      document.getElementById('maxScore').textContent = quiz.questions.length;
+      
+      const progress = ((quiz.currentQuestion + 1) / quiz.questions.length) * 100;
+      document.getElementById('quizProgress').style.width = progress + '%';
+      
+      // Show question
+      document.getElementById('questionText').textContent = question.question;
+      
+      // Show options
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.className = 'quiz-option';
+        optionElement.textContent = option;
+        optionElement.onclick = () => selectOption(index);
+        optionElement.setAttribute('data-option', index);
+        optionsContainer.appendChild(optionElement);
+      });
+      
+      // Update navigation
+      document.getElementById('prevQuestion').disabled = quiz.currentQuestion === 0;
+      document.getElementById('submitAnswer').disabled = true;
+      document.getElementById('feedbackContainer').classList.add('hidden');
+    }
+
+    function selectOption(optionIndex) {
+      // Remove previous selection
+      document.querySelectorAll('.quiz-option').forEach(el => {
+        el.classList.remove('selected');
+      });
+      
+      // Select new option
+      const selectedOption = document.querySelector(`[data-option="${optionIndex}"]`);
+      if (selectedOption) {
+        selectedOption.classList.add('selected');
+      }
+      
+      appState.quiz.selectedAnswers[appState.quiz.currentQuestion] = optionIndex;
+      document.getElementById('submitAnswer').disabled = false;
+    }
+
+    function submitAnswer() {
+      const quiz = appState.quiz;
+      const question = quiz.questions[quiz.currentQuestion];
+      const selectedAnswer = quiz.selectedAnswers[quiz.currentQuestion];
+      const isCorrect = selectedAnswer === question.correct;
+      
+      if (isCorrect) {
+        quiz.score++;
+      }
+      
+      // Show feedback
+      const feedbackContainer = document.getElementById('feedbackContainer');
+      const feedbackText = document.getElementById('feedbackText');
+      const explanationText = document.getElementById('explanationText');
+      
+      feedbackContainer.classList.remove('hidden');
+      feedbackContainer.className = `mt-4 p-4 rounded-lg ${isCorrect ? 'bg-green-600' : 'bg-red-600'}`;
+      feedbackText.textContent = isCorrect ? '✓ Correct!' : '✗ Incorrect';
+      feedbackText.className = 'font-semibold mb-2 text-white';
+      explanationText.textContent = question.explanation;
+      explanationText.className = 'text-sm text-white';
+      
+      // Update option styles
+      document.querySelectorAll('.quiz-option').forEach((el, index) => {
+        el.onclick = null; // Disable clicking
+        if (index === question.correct) {
+          el.classList.add('correct');
+        } else if (index === selectedAnswer && !isCorrect) {
+          el.classList.add('incorrect');
+        }
+      });
+      
+      // Update controls
+      document.getElementById('submitAnswer').classList.add('hidden');
+      
+      if (quiz.currentQuestion < quiz.questions.length - 1) {
+        document.getElementById('nextQuestion').classList.remove('hidden');
+      } else {
+        document.getElementById('finishQuiz').classList.remove('hidden');
+      }
+      
+      // Update score display
+      document.getElementById('currentScore').textContent = quiz.score;
+    }
+
+    function nextQuestion() {
+      appState.quiz.currentQuestion++;
+      showQuestion();
+      
+      document.getElementById('nextQuestion').classList.add('hidden');
+      document.getElementById('submitAnswer').classList.remove('hidden');
+    }
+
+    function finishQuiz() {
+      showQuizResults();
+    }
+
+    function showQuizResults() {
+      const quiz = appState.quiz;
+      const percentage = (quiz.score / quiz.questions.length) * 100;
+      
+      // Hide question container
+      document.getElementById('questionContainer').classList.add('hidden');
+      document.getElementById('feedbackContainer').classList.add('hidden');
+      document.querySelector('.flex.justify-between.items-center.mt-6').classList.add('hidden');
+      
+      // Show results
+      const resultsContainer = document.getElementById('quizResults');
+      resultsContainer.classList.remove('hidden');
+      
+      // Set results content
+      const resultsIcon = document.getElementById('resultsIcon');
+      const resultsTitle = document.getElementById('resultsTitle');
+      const resultsScore = document.getElementById('resultsScore');
+      const resultsMessage = document.getElementById('resultsMessage');
+      
+      if (percentage >= 80) {
+        resultsIcon.textContent = '🏆';
+        resultsTitle.textContent = 'Excellent!';
+        resultsTitle.className = 'text-2xl font-bold mb-2 text-green-400';
+        resultsMessage.textContent = 'You have a strong understanding of trading concepts. Keep up the great work!';
+      } else if (percentage >= 60) {
+        resultsIcon.textContent = '👍';
+        resultsTitle.textContent = 'Good Job!';
+        resultsTitle.className = 'text-2xl font-bold mb-2 text-blue-400';
+        resultsMessage.textContent = 'You have a good grasp of the basics. Review the areas you missed and keep learning!';
+      } else {
+        resultsIcon.textContent = '📚';
+        resultsTitle.textContent = 'Keep Learning!';
+        resultsTitle.className = 'text-2xl font-bold mb-2 text-yellow-400';
+        resultsMessage.textContent = 'There\'s room for improvement. Review the training materials and try again!';
+      }
+      
+      resultsScore.textContent = `You scored ${quiz.score} out of ${quiz.questions.length} (${Math.round(percentage)}%)`;
+    }
+
+    // =============================================================================
+    // NOTIFICATION SYSTEM
+    // =============================================================================
+    
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 max-w-sm ${
+        type === 'success' ? 'bg-green-600' : 
+        type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+      } text-white`;
+      
+      notification.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span>${message}</span>
+          <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+            ✕
+          </button>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Auto-remove after 5 seconds
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove();
+        }
+      }, 5000);
+    }
+
+    // =============================================================================
+    // TRAINING MANUAL FUNCTIONALITY  
+    // =============================================================================
+    
+    function showTrainingModule(moduleNumber) {
+      // Hide all modules
+      for (let i = 1; i <= 7; i++) {
+        const module = document.getElementById(`trainingModule${i}`);
+        const btn = document.getElementById(`module${i}Btn`);
+        if (module) module.classList.add('hidden');
+        if (btn) btn.classList.remove('active');
+      }
+      
+      // Show selected module
+      const selectedModule = document.getElementById(`trainingModule${moduleNumber}`);
+      const selectedBtn = document.getElementById(`module${moduleNumber}Btn`);
+      if (selectedModule) selectedModule.classList.remove('hidden');
+      if (selectedBtn) selectedBtn.classList.add('active');
+    }
+
+    // =============================================================================
+    // INITIALIZATION
+    // =============================================================================
+    
+    function initializeApp() {
+      // Set up tab navigation
+      document.getElementById('onboardingTab').addEventListener('click', () => showTab('onboarding'));
+      document.getElementById('syllabusTab').addEventListener('click', () => showTab('syllabus'));
+      document.getElementById('journalTab').addEventListener('click', () => showTab('journal'));
+      document.getElementById('trainingTab').addEventListener('click', () => showTab('training'));
+      document.getElementById('dashboardTab').addEventListener('click', () => showTab('dashboard'));
+      
+      // Set up logout functionality
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        if (confirm('Are you sure you want to logout? This will clear all your data.')) {
+          localStorage.clear();
+          location.reload();
+        }
+      });
+      
+      // Set up quiz functionality
+      document.getElementById('quizBtn').addEventListener('click', openQuiz);
+      document.getElementById('closeQuiz').addEventListener('click', closeQuiz);
+      document.getElementById('submitAnswer').addEventListener('click', submitAnswer);
+      document.getElementById('nextQuestion').addEventListener('click', nextQuestion);
+      document.getElementById('finishQuiz').addEventListener('click', finishQuiz);
+      document.getElementById('retakeQuiz').addEventListener('click', resetQuiz);
+      document.getElementById('closeQuizResults').addEventListener('click', closeQuiz);
+      
+      // Set up onboarding completion
+      const beginJourneyBtn = document.getElementById('beginJourneyBtn');
+      if (beginJourneyBtn) {
+        beginJourneyBtn.addEventListener('click', () => {
+          showTab('syllabus');
+          showNotification('Welcome to your trading journey! Start with the Syllabus to master the fundamentals.', 'success');
+        });
+      }
+      
+      // Initialize journal
+      initializeJournal();
+      
+      // Update UI based on saved state
+      appState.phases.completed.forEach(phase => {
+        updatePhaseStatus(phase);
+        if (phase < 5) unlockPhase(phase + 1);
+      });
+      
+      appState.onboarding.completed.forEach(step => {
+        updateOnboardingStep(step);
+        if (step < appState.onboarding.total) unlockOnboardingStep(step + 1);
+      });
+      
+      // Unlock first phase and onboarding step by default
+      if (appState.phases.completed.length === 0) {
+        unlockPhase(1);
+      }
+      if (appState.onboarding.completed.length === 0) {
+        unlockOnboardingStep(1);
+      }
+      
+      // Update progress displays
+      updateSyllabusProgress();
+      updateOnboardingProgress();
+      
+      // Show default tab (start with Onboarding)
+      showTab('onboarding');
+      
+      // Add keyboard navigation support
+      document.addEventListener('keydown', handleKeyNavigation);
+      
+      console.log('Griffin\'s Rise Trading Journal initialized successfully!');
+    }
+
+    function handleKeyNavigation(e) {
+      // ESC key closes modals
+      if (e.key === 'Escape') {
+        closeQuiz();
+      }
+      
+      // Tab navigation with Alt + number
+      if (e.altKey) {
+        switch(e.key) {
+          case '1': showTab('onboarding'); break;
+          case '2': showTab('syllabus'); break;
+          case '3': showTab('training'); break;
+          case '4': showTab('journal'); break;
+          case '5': showTab('dashboard'); break;
+          case '6': openQuiz(); break;
+        }
+      }
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', initializeApp);
+
+    // Add some CSS for grid layout
+    const additionalStyles = document.createElement('style');
+    additionalStyles.textContent = `
+      .grid {
+        display: grid;
+      }
+      .grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+      .grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      @media (min-width: 768px) {
+        .md\\:grid-cols-2 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .md\\:grid-cols-3 {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .md\\:col-span-2 {
+          grid-column: span 2 / span 2;
+        }
+      }
+      @media (min-width: 1024px) {
+        .lg\\:grid-cols-4 {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+      .space-y-2 > * + * {
+        margin-top: 0.5rem;
+      }
+      .space-y-4 > * + * {
+        margin-top: 1rem;
+      }
+      .space-y-6 > * + * {
+        margin-top: 1.5rem;
+      }
+    `;
+    document.head.appendChild(additionalStyles);
+
+  </script>
+  <style>
+  img[src*="griffin"], img[src*="logo"], .griffin-logo {
+    height: 80px !important;
+    width: auto !important;
+    max-width: 320px !important;
+    object-fit: contain !important;
+    margin-right: 16px !important;
+    vertical-align: middle !important;
+    display: inline-block !important;
+  }
+</style>
+</body>
+</html>
